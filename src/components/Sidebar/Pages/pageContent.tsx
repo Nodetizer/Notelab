@@ -1,5 +1,5 @@
 import React from "react";
-import "./sidebar.css";
+// import "./sidebar.css";
 
 interface PageContentProps {
   children: React.ReactNode;

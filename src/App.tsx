@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from "./sidebar/sidebar";
-import PageContent from "./sidebar/pageContent";
-import Incoming from "./sidebar/incoming";
+import PageContent from "./components/Sidebar/Pages/pageContent";
+import Incoming from "./pages/incoming";
 import "./sidebar/sidebar.css";
 
 const App: React.FC = () => {
@@ -22,9 +22,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-// FUCK YOU
-// FUCK YOU
-// FUCK YOU
-// FUCK YOU
-// FUCK YOU
