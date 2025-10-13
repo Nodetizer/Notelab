@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import type { KeyboardEvent } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./incoming.css";
 
 interface Task {
@@ -12,12 +11,17 @@ const Incoming: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskText, setNewTaskText] = useState("");
   const [creatingTask, setCreatingTask] = useState(false);
+  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
+  const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
+  const [editingText, setEditingText] = useState("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const editInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleAddTask = () => {
     setCreatingTask(true);
   };
 
-  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && newTaskText.trim() !== "") {
       setTasks([
         ...tasks,
@@ -25,6 +29,11 @@ const Incoming: React.FC = () => {
       ]);
       setNewTaskText("");
       setCreatingTask(false);
+    }
+
+    if (e.key === "Escape") {
+      setCreatingTask(false);
+      setNewTaskText("");
     }
   };
 
@@ -34,6 +43,68 @@ const Incoming: React.FC = () => {
         task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
+  };
+
+  // Удаление задачи при нажатии Del
+  useEffect(() => {
+    const handleDeleteKey = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Delete" && selectedTaskId !== null) {
+        setTasks((prev) => prev.filter((t) => t.id !== selectedTaskId));
+        setSelectedTaskId(null);
+      }
+    };
+
+    document.addEventListener("keydown", handleDeleteKey);
+    return () => document.removeEventListener("keydown", handleDeleteKey);
+  }, [selectedTaskId]);
+
+  // Клик вне инпута — отмена пустой задачи
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        creatingTask &&
+        inputRef.current &&
+        !inputRef.current.contains(e.target as Node)
+      ) {
+        if (newTaskText.trim() === "") {
+          setCreatingTask(false);
+          setNewTaskText("");
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [creatingTask, newTaskText]);
+
+  const startEditing = (taskId: number, currentText: string) => {
+    setEditingTaskId(taskId);
+    setEditingText(currentText);
+  };
+
+  const saveEditing = () => {
+    if (editingTaskId !== null) {
+      setTasks((prev) =>
+        prev.map((task) =>
+          task.id === editingTaskId ? { ...task, text: editingText } : task
+        )
+      );
+      setEditingTaskId(null);
+      setEditingText("");
+    }
+  };
+
+  const cancelEditing = () => {
+    setEditingTaskId(null);
+    setEditingText("");
+  };
+
+  const handleEditKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      saveEditing();
+    } else if (e.key === "Escape") {
+      cancelEditing();
+    }
   };
 
   const activeTasksCount = tasks.filter((task) => !task.completed).length;
@@ -63,6 +134,7 @@ const Incoming: React.FC = () => {
         {creatingTask && (
           <div className="task-item">
             <input
+              ref={inputRef}
               type="text"
               className="task-input"
               autoFocus
@@ -79,17 +151,37 @@ const Incoming: React.FC = () => {
         )}
 
         {tasks.map((task) => (
-          <div key={task.id} className="task-item">
+          <div
+            key={task.id}
+            className={`task-item ${
+              selectedTaskId === task.id ? "selected" : ""
+            }`}
+            onClick={() => setSelectedTaskId(task.id)}
+          >
             <input
               type="checkbox"
               checked={task.completed}
               onChange={() => toggleTaskCompletion(task.id)}
             />
-            <span
-              className={task.completed ? "task-text completed" : "task-text"}
-            >
-              {task.text}
-            </span>
+            {editingTaskId === task.id ? (
+              <input
+                ref={editInputRef}
+                type="text"
+                className="task-input editing"
+                value={editingText}
+                onChange={(e) => setEditingText(e.target.value)}
+                onKeyDown={handleEditKey}
+                onBlur={saveEditing}
+                autoFocus
+              />
+            ) : (
+              <span
+                className={task.completed ? "task-text completed" : "task-text"}
+                onDoubleClick={() => startEditing(task.id, task.text)}
+              >
+                {task.text}
+              </span>
+            )}
           </div>
         ))}
       </div>
