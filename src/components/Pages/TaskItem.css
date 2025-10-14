@@ -1,0 +1,40 @@
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.task-item:hover {
+  background: #2c2c2c;
+}
+
+.task-item.selected {
+  background: #3b3b3b;
+}
+
+.task-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.task-input.editing {
+  border-bottom: 1px solid #555;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  cursor: pointer;
+}
+
+.task-text.completed {
+  opacity: 0.5;
+  text-decoration: line-through;
+}

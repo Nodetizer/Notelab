@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./incoming.css";
 import TaskCounter from "../components/Pages/taskCounter";
 import AddTaskButton from "../components/Pages/AddTaskButton";
+import TaskItem from "../components/Pages/TaskItem";
 
 interface Task {
   id: number;
@@ -18,11 +19,8 @@ const Incoming: React.FC = () => {
   const [editingText, setEditingText] = useState("");
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const editInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleAddTask = () => {
-    setCreatingTask(true);
-  };
+  const handleAddTask = () => setCreatingTask(true);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && newTaskText.trim() !== "") {
@@ -48,7 +46,7 @@ const Incoming: React.FC = () => {
     );
   };
 
-  // Удаление задачи при нажатии Delete
+  // Удаление задачи при Delete
   useEffect(() => {
     const handleDeleteKey = (e: KeyboardEvent) => {
       if (e.key === "Delete" && selectedTaskId !== null) {
@@ -56,12 +54,11 @@ const Incoming: React.FC = () => {
         setSelectedTaskId(null);
       }
     };
-
     document.addEventListener("keydown", handleDeleteKey);
     return () => document.removeEventListener("keydown", handleDeleteKey);
   }, [selectedTaskId]);
 
-  // Клик вне поля — отмена пустой задачи
+  // Клик вне поля — отмена создания пустой задачи
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -75,12 +72,10 @@ const Incoming: React.FC = () => {
         }
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [creatingTask, newTaskText]);
 
-  // Редактирование задачи
   const startEditing = (taskId: number, currentText: string) => {
     setEditingTaskId(taskId);
     setEditingText(currentText);
@@ -103,14 +98,6 @@ const Incoming: React.FC = () => {
   const cancelEditing = () => {
     setEditingTaskId(null);
     setEditingText("");
-  };
-
-  const handleEditKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      saveEditing();
-    } else if (e.key === "Escape") {
-      cancelEditing();
-    }
   };
 
   const activeTasksCount = tasks.filter((t) => !t.completed).length;
@@ -146,38 +133,19 @@ const Incoming: React.FC = () => {
         )}
 
         {tasks.map((task) => (
-          <div
+          <TaskItem
             key={task.id}
-            className={`task-item ${
-              selectedTaskId === task.id ? "selected" : ""
-            }`}
-            onClick={() => setSelectedTaskId(task.id)}
-          >
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => toggleTaskCompletion(task.id)}
-            />
-            {editingTaskId === task.id ? (
-              <input
-                ref={editInputRef}
-                type="text"
-                className="task-input editing"
-                value={editingText}
-                onChange={(e) => setEditingText(e.target.value)}
-                onKeyDown={handleEditKey}
-                onBlur={saveEditing}
-                autoFocus
-              />
-            ) : (
-              <span
-                className={task.completed ? "task-text completed" : "task-text"}
-                onDoubleClick={() => startEditing(task.id, task.text)}
-              >
-                {task.text}
-              </span>
-            )}
-          </div>
+            task={task}
+            selected={selectedTaskId === task.id}
+            isEditing={editingTaskId === task.id}
+            editingText={editingText}
+            onSelect={setSelectedTaskId}
+            onToggleComplete={toggleTaskCompletion}
+            onStartEditing={startEditing}
+            onEditingChange={setEditingText}
+            onSaveEditing={saveEditing}
+            onCancelEditing={cancelEditing}
+          />
         ))}
       </div>
     </div>
