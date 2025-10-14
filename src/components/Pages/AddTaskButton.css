@@ -1,0 +1,19 @@
+.add-task-btn {
+  background-color: #2b2b2b;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.add-task-btn:hover {
+  background-color: #3c3c3c;
+}
+
+.add-task-btn:active {
+  transform: scale(0.97);
+}

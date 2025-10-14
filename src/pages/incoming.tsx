@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./incoming.css";
-import TaskCounter from "./../components/Pages/taskCounter";
+import TaskCounter from "../components/Pages/taskCounter";
+import AddTaskButton from "../components/Pages/AddTaskButton";
 
 interface Task {
   id: number;
@@ -121,9 +122,7 @@ const Incoming: React.FC = () => {
           <h1>Входящие</h1>
           <TaskCounter count={activeTasksCount} />
         </div>
-        <button className="add-task-btn" onClick={handleAddTask}>
-          + Добавить задачу
-        </button>
+        <AddTaskButton onClick={handleAddTask} />
       </div>
 
       <div className="incoming-content">
