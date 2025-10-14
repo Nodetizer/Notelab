@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./incoming.css";
-import TaskCounter from "./../components/Pages/taskCounter";
 
 interface Task {
   id: number;
@@ -15,7 +14,6 @@ const Incoming: React.FC = () => {
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
   const [editingText, setEditingText] = useState("");
-
   const inputRef = useRef<HTMLInputElement | null>(null);
   const editInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -25,8 +23,8 @@ const Incoming: React.FC = () => {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && newTaskText.trim() !== "") {
-      setTasks((prev) => [
-        ...prev,
+      setTasks([
+        ...tasks,
         { id: Date.now(), text: newTaskText.trim(), completed: false },
       ]);
       setNewTaskText("");
@@ -40,16 +38,16 @@ const Incoming: React.FC = () => {
   };
 
   const toggleTaskCompletion = (id: number) => {
-    setTasks((prev) =>
-      prev.map((task) =>
+    setTasks(
+      tasks.map((task) =>
         task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
   };
 
-  // Удаление задачи при нажатии Delete
+  // Удаление задачи при нажатии Del
   useEffect(() => {
-    const handleDeleteKey = (e: KeyboardEvent) => {
+    const handleDeleteKey = (e: globalThis.KeyboardEvent) => {
       if (e.key === "Delete" && selectedTaskId !== null) {
         setTasks((prev) => prev.filter((t) => t.id !== selectedTaskId));
         setSelectedTaskId(null);
@@ -60,7 +58,7 @@ const Incoming: React.FC = () => {
     return () => document.removeEventListener("keydown", handleDeleteKey);
   }, [selectedTaskId]);
 
-  // Клик вне поля — отмена пустой задачи
+  // Клик вне инпута — отмена пустой задачи
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -79,14 +77,13 @@ const Incoming: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [creatingTask, newTaskText]);
 
-  // Редактирование задачи
   const startEditing = (taskId: number, currentText: string) => {
     setEditingTaskId(taskId);
     setEditingText(currentText);
   };
 
   const saveEditing = () => {
-    if (editingTaskId !== null && editingText.trim() !== "") {
+    if (editingTaskId !== null) {
       setTasks((prev) =>
         prev.map((task) =>
           task.id === editingTaskId ? { ...task, text: editingText } : task
@@ -94,8 +91,6 @@ const Incoming: React.FC = () => {
       );
       setEditingTaskId(null);
       setEditingText("");
-    } else {
-      cancelEditing();
     }
   };
 
@@ -112,14 +107,23 @@ const Incoming: React.FC = () => {
     }
   };
 
-  const activeTasksCount = tasks.filter((t) => !t.completed).length;
+  const activeTasksCount = tasks.filter((task) => !task.completed).length;
+
+  const getTaskLabel = (count: number) => {
+    if (count % 10 === 1 && count % 100 !== 11) return "активная задача";
+    if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100))
+      return "активные задачи";
+    return "активных задач";
+  };
 
   return (
     <div className="incoming-page">
       <div className="incoming-header">
         <div>
           <h1>Входящие</h1>
-          <TaskCounter count={activeTasksCount} />
+          <div className="task-counter">
+            {activeTasksCount} {getTaskLabel(activeTasksCount)}
+          </div>
         </div>
         <button className="add-task-btn" onClick={handleAddTask}>
           + Добавить задачу

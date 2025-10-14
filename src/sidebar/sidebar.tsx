@@ -18,6 +18,13 @@ const Sidebar: React.FC = () => {
           <span className="sidebar-link-text">Входящие</span>
         </Link>
       </div>
+
+      <div className="sidebar-links">
+        <Link to="/incoming_test" className="sidebar-link">
+          <img src={Incoming} alt="Incoming Icon" className="sidebar-icon" />
+          <span className="sidebar-link-text">Тест камминг</span>
+        </Link>
+      </div>
     </div>
   );
 };
