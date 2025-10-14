@@ -1,26 +1,24 @@
 import React, { useRef, useEffect } from "react";
 import "./TaskItem.css";
-
-interface Task {
-  id: number;
-  text: string;
-  completed: boolean;
-  priority: "Срочно" | "Высокое" | "Среднее" | "Низкое";
-}
+import TaskDatePicker from "./TaskDatePicker";
+import type { Task } from "../../pages/incoming";
 
 interface TaskItemProps {
   task: Task;
   isEditing: boolean;
   editingText: string;
   editingPriority: Task["priority"];
+  editingDate?: Date;
+  onEditingChange: (value: string) => void;
   onEditingPriorityChange: (value: Task["priority"]) => void;
+  onEditingDateChange: (date: Date) => void;
   onToggleComplete: (id: number) => void;
   onStartEditing: (
     id: number,
     text: string,
-    priority: Task["priority"]
+    priority: Task["priority"],
+    date?: Date
   ) => void;
-  onEditingChange: (value: string) => void;
   onSaveEditing: () => void;
   onCancelEditing: () => void;
 }
@@ -30,10 +28,12 @@ const TaskItem: React.FC<TaskItemProps> = ({
   isEditing,
   editingText,
   editingPriority,
+  editingDate,
+  onEditingChange,
   onEditingPriorityChange,
+  onEditingDateChange,
   onToggleComplete,
   onStartEditing,
-  onEditingChange,
   onSaveEditing,
   onCancelEditing,
 }) => {
@@ -55,6 +55,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
         checked={task.completed}
         onChange={() => onToggleComplete(task.id)}
       />
+
       {isEditing ? (
         <div className="editing-container">
           <input
@@ -65,6 +66,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
             onChange={(e) => onEditingChange(e.target.value)}
             onKeyDown={handleEditKey}
           />
+
           <select
             className="priority-select editing-priority"
             value={editingPriority}
@@ -77,18 +79,28 @@ const TaskItem: React.FC<TaskItemProps> = ({
             <option value="Среднее">Среднее</option>
             <option value="Низкое">Низкое</option>
           </select>
+
+          <TaskDatePicker
+            selectedDate={editingDate}
+            onDateChange={onEditingDateChange}
+          />
         </div>
       ) : (
         <span
           className={task.completed ? "task-text completed" : "task-text"}
           onDoubleClick={() =>
-            onStartEditing(task.id, task.text, task.priority)
+            onStartEditing(task.id, task.text, task.priority, task.dueDate)
           }
         >
           {task.text}{" "}
           <span className={`priority-label ${task.priority.toLowerCase()}`}>
             {task.priority}
-          </span>
+          </span>{" "}
+          {task.dueDate && (
+            <span className="task-date">
+              {task.dueDate.toLocaleDateString("ru-RU")}
+            </span>
+          )}
         </span>
       )}
     </div>

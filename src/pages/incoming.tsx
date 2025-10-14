@@ -4,11 +4,12 @@ import TaskCounter from "../components/Pages/taskCounter";
 import AddTaskButton from "../components/Pages/AddTaskButton";
 import TaskItem from "../components/Pages/TaskItem";
 
-interface Task {
+export interface Task {
   id: number;
   text: string;
   completed: boolean;
   priority: "Срочно" | "Высокое" | "Среднее" | "Низкое";
+  dueDate?: Date;
 }
 
 const Incoming: React.FC = () => {
@@ -16,11 +17,13 @@ const Incoming: React.FC = () => {
   const [newTaskText, setNewTaskText] = useState("");
   const [newTaskPriority, setNewTaskPriority] =
     useState<Task["priority"]>("Среднее");
+  const [newTaskDate, setNewTaskDate] = useState<Date | undefined>(undefined);
   const [creatingTask, setCreatingTask] = useState(false);
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
   const [editingText, setEditingText] = useState("");
   const [editingPriority, setEditingPriority] =
     useState<Task["priority"]>("Среднее");
+  const [editingDate, setEditingDate] = useState<Date | undefined>(undefined);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -35,10 +38,12 @@ const Incoming: React.FC = () => {
         text: newTaskText.trim(),
         completed: false,
         priority: newTaskPriority,
+        dueDate: newTaskDate,
       },
     ]);
     setNewTaskText("");
     setNewTaskPriority("Среднее");
+    setNewTaskDate(undefined);
     setCreatingTask(false);
   };
 
@@ -48,6 +53,7 @@ const Incoming: React.FC = () => {
       setCreatingTask(false);
       setNewTaskText("");
       setNewTaskPriority("Среднее");
+      setNewTaskDate(undefined);
     }
   };
 
@@ -62,11 +68,13 @@ const Incoming: React.FC = () => {
   const startEditing = (
     taskId: number,
     currentText: string,
-    currentPriority: Task["priority"]
+    currentPriority: Task["priority"],
+    currentDate?: Date
   ) => {
     setEditingTaskId(taskId);
     setEditingText(currentText);
     setEditingPriority(currentPriority);
+    setEditingDate(currentDate);
   };
 
   const saveEditing = () => {
@@ -74,7 +82,12 @@ const Incoming: React.FC = () => {
       setTasks((prev) =>
         prev.map((task) =>
           task.id === editingTaskId
-            ? { ...task, text: editingText, priority: editingPriority }
+            ? {
+                ...task,
+                text: editingText,
+                priority: editingPriority,
+                dueDate: editingDate,
+              }
             : task
         )
       );
@@ -88,6 +101,7 @@ const Incoming: React.FC = () => {
     setEditingTaskId(null);
     setEditingText("");
     setEditingPriority("Среднее");
+    setEditingDate(undefined);
   };
 
   const activeTasksCount = tasks.filter((t) => !t.completed).length;
@@ -141,10 +155,12 @@ const Incoming: React.FC = () => {
             isEditing={editingTaskId === task.id}
             editingText={editingText}
             editingPriority={editingPriority}
+            editingDate={editingDate}
+            onEditingChange={setEditingText}
             onEditingPriorityChange={setEditingPriority}
+            onEditingDateChange={setEditingDate}
             onToggleComplete={toggleTaskCompletion}
             onStartEditing={startEditing}
-            onEditingChange={setEditingText}
             onSaveEditing={saveEditing}
             onCancelEditing={cancelEditing}
           />
