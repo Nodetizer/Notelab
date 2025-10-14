@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./incoming.css";
 import TaskCounter from "../components/Pages/taskCounter";
 import AddTaskButton from "../components/Pages/AddTaskButton";
@@ -8,18 +8,21 @@ interface Task {
   id: number;
   text: string;
   completed: boolean;
+  priority: "Срочно" | "Высокое" | "Среднее" | "Низкое";
 }
 
 const Incoming: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskText, setNewTaskText] = useState("");
+  const [newTaskPriority, setNewTaskPriority] =
+    useState<Task["priority"]>("Среднее");
   const [creatingTask, setCreatingTask] = useState(false);
-  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
   const [editingText, setEditingText] = useState("");
+  const [editingPriority, setEditingPriority] =
+    useState<Task["priority"]>("Среднее");
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
 
   const handleAddTask = () => setCreatingTask(true);
 
@@ -27,18 +30,24 @@ const Incoming: React.FC = () => {
     if (newTaskText.trim() === "") return;
     setTasks((prev) => [
       ...prev,
-      { id: Date.now(), text: newTaskText.trim(), completed: false },
+      {
+        id: Date.now(),
+        text: newTaskText.trim(),
+        completed: false,
+        priority: newTaskPriority,
+      },
     ]);
     setNewTaskText("");
+    setNewTaskPriority("Среднее");
     setCreatingTask(false);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      createTask();
-    } else if (e.key === "Escape") {
+    if (e.key === "Enter") createTask();
+    else if (e.key === "Escape") {
       setCreatingTask(false);
       setNewTaskText("");
+      setNewTaskPriority("Среднее");
     }
   };
 
@@ -50,62 +59,26 @@ const Incoming: React.FC = () => {
     );
   };
 
-  // Удаление задачи при Delete
-  useEffect(() => {
-    const handleDeleteKey = (e: KeyboardEvent) => {
-      if (e.key === "Delete" && selectedTaskId !== null) {
-        setTasks((prev) => prev.filter((t) => t.id !== selectedTaskId));
-        setSelectedTaskId(null);
-      }
-    };
-    document.addEventListener("keydown", handleDeleteKey);
-    return () => document.removeEventListener("keydown", handleDeleteKey);
-  }, [selectedTaskId]);
-
-  // Клик вне инпута и вне задач
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      // Клик вне инпута создания задачи
-      if (
-        creatingTask &&
-        inputRef.current &&
-        !inputRef.current.contains(e.target as Node)
-      ) {
-        if (newTaskText.trim() !== "") {
-          createTask();
-        } else {
-          setCreatingTask(false);
-          setNewTaskText("");
-        }
-      }
-
-      // Клик вне списка задач — снимаем выделение
-      if (
-        contentRef.current &&
-        !contentRef.current.contains(e.target as Node)
-      ) {
-        setSelectedTaskId(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [creatingTask, newTaskText]);
-
-  const startEditing = (taskId: number, currentText: string) => {
+  const startEditing = (
+    taskId: number,
+    currentText: string,
+    currentPriority: Task["priority"]
+  ) => {
     setEditingTaskId(taskId);
     setEditingText(currentText);
+    setEditingPriority(currentPriority);
   };
 
   const saveEditing = () => {
     if (editingTaskId !== null && editingText.trim() !== "") {
       setTasks((prev) =>
         prev.map((task) =>
-          task.id === editingTaskId ? { ...task, text: editingText } : task
+          task.id === editingTaskId
+            ? { ...task, text: editingText, priority: editingPriority }
+            : task
         )
       );
-      setEditingTaskId(null);
-      setEditingText("");
+      cancelEditing();
     } else {
       cancelEditing();
     }
@@ -114,6 +87,7 @@ const Incoming: React.FC = () => {
   const cancelEditing = () => {
     setEditingTaskId(null);
     setEditingText("");
+    setEditingPriority("Среднее");
   };
 
   const activeTasksCount = tasks.filter((t) => !t.completed).length;
@@ -128,7 +102,7 @@ const Incoming: React.FC = () => {
         <AddTaskButton onClick={handleAddTask} />
       </div>
 
-      <div className="incoming-content" ref={contentRef}>
+      <div className="incoming-content">
         {creatingTask && (
           <div className="task-item">
             <input
@@ -141,6 +115,18 @@ const Incoming: React.FC = () => {
               onChange={(e) => setNewTaskText(e.target.value)}
               onKeyDown={handleKeyPress}
             />
+            <select
+              className="priority-select"
+              value={newTaskPriority}
+              onChange={(e) =>
+                setNewTaskPriority(e.target.value as Task["priority"])
+              }
+            >
+              <option value="Срочно">Срочно</option>
+              <option value="Высокое">Высокое</option>
+              <option value="Среднее">Среднее</option>
+              <option value="Низкое">Низкое</option>
+            </select>
           </div>
         )}
 
@@ -152,10 +138,10 @@ const Incoming: React.FC = () => {
           <TaskItem
             key={task.id}
             task={task}
-            selected={selectedTaskId === task.id}
             isEditing={editingTaskId === task.id}
             editingText={editingText}
-            onSelect={setSelectedTaskId}
+            editingPriority={editingPriority}
+            onEditingPriorityChange={setEditingPriority}
             onToggleComplete={toggleTaskCompletion}
             onStartEditing={startEditing}
             onEditingChange={setEditingText}

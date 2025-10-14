@@ -38,3 +38,49 @@
   opacity: 0.5;
   text-decoration: line-through;
 }
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+}
+
+.task-text.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.priority-label {
+  margin-left: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  color: #fff;
+}
+
+.priority-label.срочно {
+  background-color: #e74c3c;
+}
+.priority-label.высокое {
+  background-color: #e67e22;
+}
+.priority-label.среднее {
+  background-color: #f1c40f;
+  color: #000;
+}
+.priority-label.низкое {
+  background-color: #2ecc71;
+}
+
+.editing-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.priority-select.editing-priority {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8em;
+}
