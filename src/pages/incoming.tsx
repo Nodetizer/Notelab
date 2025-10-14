@@ -22,17 +22,20 @@ const Incoming: React.FC = () => {
 
   const handleAddTask = () => setCreatingTask(true);
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && newTaskText.trim() !== "") {
-      setTasks((prev) => [
-        ...prev,
-        { id: Date.now(), text: newTaskText.trim(), completed: false },
-      ]);
-      setNewTaskText("");
-      setCreatingTask(false);
-    }
+  const createTask = () => {
+    if (newTaskText.trim() === "") return;
+    setTasks((prev) => [
+      ...prev,
+      { id: Date.now(), text: newTaskText.trim(), completed: false },
+    ]);
+    setNewTaskText("");
+    setCreatingTask(false);
+  };
 
-    if (e.key === "Escape") {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      createTask();
+    } else if (e.key === "Escape") {
       setCreatingTask(false);
       setNewTaskText("");
     }
@@ -58,7 +61,7 @@ const Incoming: React.FC = () => {
     return () => document.removeEventListener("keydown", handleDeleteKey);
   }, [selectedTaskId]);
 
-  // Клик вне поля — отмена создания пустой задачи
+  // Клик вне инпута создания задачи
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -66,7 +69,11 @@ const Incoming: React.FC = () => {
         inputRef.current &&
         !inputRef.current.contains(e.target as Node)
       ) {
-        if (newTaskText.trim() === "") {
+        if (newTaskText.trim() !== "") {
+          // если есть текст — создаём задачу
+          createTask();
+        } else {
+          // если пустое поле — отменяем создание
           setCreatingTask(false);
           setNewTaskText("");
         }
