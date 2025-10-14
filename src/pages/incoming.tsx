@@ -19,6 +19,7 @@ const Incoming: React.FC = () => {
   const [editingText, setEditingText] = useState("");
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
 
   const handleAddTask = () => setCreatingTask(true);
 
@@ -61,24 +62,32 @@ const Incoming: React.FC = () => {
     return () => document.removeEventListener("keydown", handleDeleteKey);
   }, [selectedTaskId]);
 
-  // Клик вне инпута создания задачи
+  // Клик вне инпута и вне задач
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
+      // Клик вне инпута создания задачи
       if (
         creatingTask &&
         inputRef.current &&
         !inputRef.current.contains(e.target as Node)
       ) {
         if (newTaskText.trim() !== "") {
-          // если есть текст — создаём задачу
           createTask();
         } else {
-          // если пустое поле — отменяем создание
           setCreatingTask(false);
           setNewTaskText("");
         }
       }
+
+      // Клик вне списка задач — снимаем выделение
+      if (
+        contentRef.current &&
+        !contentRef.current.contains(e.target as Node)
+      ) {
+        setSelectedTaskId(null);
+      }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [creatingTask, newTaskText]);
@@ -119,7 +128,7 @@ const Incoming: React.FC = () => {
         <AddTaskButton onClick={handleAddTask} />
       </div>
 
-      <div className="incoming-content">
+      <div className="incoming-content" ref={contentRef}>
         {creatingTask && (
           <div className="task-item">
             <input
