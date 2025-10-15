@@ -3,6 +3,8 @@ import Incoming from "./icons/Incoming.svg";
 import CloseSidebar from "./icons/Close_sidebar.svg";
 import LogoHover from "./icons/Logo_hover.svg";
 import LogoClick from "./icons/Logo_click.svg";
+import CloseSidebarHover from "./icons/Close_sidebar_hover.svg";
+import CloseSidebarClick from "./icons/Close_sidebar_click.svg";
 // Добавляй сюда остальные иконки по аналогии
 
 export {
@@ -11,5 +13,7 @@ export {
   CloseSidebar,
   LogoHover,
   LogoClick,
+  CloseSidebarHover,
+  CloseSidebarClick,
   // остальные иконки
 };

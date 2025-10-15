@@ -7,16 +7,26 @@ import {
   LogoClick,
   Incoming,
   CloseSidebar,
+  CloseSidebarHover,
+  CloseSidebarClick,
 } from "./../assets/icons";
 
 const Sidebar: React.FC = () => {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
   const [isLogoClicked, setIsLogoClicked] = useState(false);
+  const [isCloseHovered, setIsCloseHovered] = useState(false);
+  const [isCloseClicked, setIsCloseClicked] = useState(false);
 
   const getLogo = () => {
     if (isLogoClicked) return LogoClick;
     if (isLogoHovered) return LogoHover;
     return Logo;
+  };
+
+  const getCloseIcon = () => {
+    if (isCloseClicked) return CloseSidebarClick;
+    if (isCloseHovered) return CloseSidebarHover;
+    return CloseSidebar;
   };
 
   return (
@@ -37,9 +47,16 @@ const Sidebar: React.FC = () => {
         </Link>
 
         <img
-          src={CloseSidebar}
+          src={getCloseIcon()}
           alt="Close Sidebar Icon"
           className="sidebar-close-icon"
+          onMouseEnter={() => setIsCloseHovered(true)}
+          onMouseLeave={() => {
+            setIsCloseHovered(false);
+            setIsCloseClicked(false);
+          }}
+          onMouseDown={() => setIsCloseClicked(true)}
+          onMouseUp={() => setIsCloseClicked(false)}
         />
       </div>
 
