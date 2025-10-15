@@ -9,6 +9,7 @@ import {
   CloseSidebar,
   CloseSidebarHover,
   CloseSidebarClick,
+  Progress, // иконка уровня
 } from "./../assets/icons";
 
 const Sidebar: React.FC = () => {
@@ -28,6 +29,9 @@ const Sidebar: React.FC = () => {
     if (isCloseHovered) return CloseSidebarHover;
     return CloseSidebar;
   };
+
+  // пример уровня, можно передавать через пропсы
+  const level = 35; // %
 
   return (
     <div className="sidebar">
@@ -62,6 +66,21 @@ const Sidebar: React.FC = () => {
 
       <div className="sidebar-divider"></div>
 
+      {/* Уровень */}
+      <div className="sidebar-level">
+        <div className="sidebar-level-header">
+          <img src={Progress} alt="Level Icon" className="sidebar-level-icon" />
+          <span className="sidebar-level-text">Уровень 7</span>
+        </div>
+        <div className="sidebar-level-bar-container">
+          <div
+            className="sidebar-level-bar-fill"
+            style={{ width: `${level}%` }}
+          ></div>
+        </div>
+      </div>
+
+      {/* Ссылки */}
       <div className="sidebar-links">
         <Link to="/incoming" className="sidebar-link">
           <img src={Incoming} alt="Incoming Icon" className="sidebar-icon" />

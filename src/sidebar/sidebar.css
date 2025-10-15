@@ -100,3 +100,44 @@ body {
 .sidebar-link-text {
   margin-left: 6px;
 }
+
+/* Уровень */
+.sidebar-level {
+  margin-top: 20px; /* отступ от линии под логотипом */
+  padding-right: 30px; /* отступ справа для полосы прогресса */
+}
+
+.sidebar-level-header {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-level-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.sidebar-level-text {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400; /* regular */
+  font-size: 14px;
+  color: #fff;
+  margin-left: 6px; /* отступ текста от иконки */
+}
+
+.sidebar-level-bar-container {
+  position: relative;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1px;
+  margin-top: 8px;
+}
+
+.sidebar-level-bar-fill {
+  position: absolute;
+  height: 1px;
+  background: #6234ef;
+  border-radius: 1px;
+  top: 0;
+  left: 0;
+}
