@@ -1,16 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./sidebar.css";
-import { Logo, Incoming } from "./../assets/icons";
+import {
+  Logo,
+  LogoHover,
+  LogoClick,
+  Incoming,
+  CloseSidebar,
+} from "./../assets/icons";
 
 const Sidebar: React.FC = () => {
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
+  const [isLogoClicked, setIsLogoClicked] = useState(false);
+
+  const getLogo = () => {
+    if (isLogoClicked) return LogoClick;
+    if (isLogoHovered) return LogoHover;
+    return Logo;
+  };
+
   return (
     <div className="sidebar">
       <div className="sidebar-logo-wrapper">
-        <Link to="/">
-          <img src={Logo} alt="Notelab Logo" className="sidebar-logo" />
+        <Link
+          to="/"
+          className="sidebar-logo-container"
+          onMouseEnter={() => setIsLogoHovered(true)}
+          onMouseLeave={() => {
+            setIsLogoHovered(false);
+            setIsLogoClicked(false);
+          }}
+          onMouseDown={() => setIsLogoClicked(true)}
+          onMouseUp={() => setIsLogoClicked(false)}
+        >
+          <img src={getLogo()} alt="Notelab Logo" className="sidebar-logo" />
         </Link>
+
+        <img
+          src={CloseSidebar}
+          alt="Close Sidebar Icon"
+          className="sidebar-close-icon"
+        />
       </div>
+
+      <div className="sidebar-divider"></div>
 
       <div className="sidebar-links">
         <Link to="/incoming" className="sidebar-link">

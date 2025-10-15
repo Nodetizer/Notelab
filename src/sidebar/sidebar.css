@@ -11,19 +11,61 @@ body {
   flex-direction: column;
   padding: 20px;
   height: 100vh;
+  position: relative; /* нужно для абсолютного позиционирования линии */
+}
+
+.sidebar-logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 20px;
 }
 
 .sidebar-logo {
   display: block;
-  margin-left: 30px; /* отступ от левого края */
-  margin-top: 20px; /* отступ сверху */
-  width: 94px; /* фиксированная ширина */
-  height: 23px; /* фиксированная высота */
+  margin-left: 10px;
+  margin-top: 5px;
+  width: 94px;
+  height: 23px;
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+  user-select: none;
 }
 
-.sidebar-title {
-  font-size: 20px;
-  margin-bottom: 20px;
+.sidebar-logo-container:hover .sidebar-logo {
+  transform: scale(1.03);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.15));
+}
+
+.sidebar-logo-container:active .sidebar-logo {
+  transform: scale(0.96);
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.1));
+}
+
+.sidebar-close-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar-close-icon:hover {
+  opacity: 1;
+}
+
+/* Линия прибита к реальным границам сайдбара */
+.sidebar-divider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 75px; /* расстояние от верхнего края сайдбара до линии, подгони под свой дизайн */
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-link {
@@ -55,9 +97,5 @@ body {
 }
 
 .sidebar-link-text {
-  margin-left: 6px; /* отступ текста от иконки */
-}
-
-.sidebar-logo-wrapper {
-  margin-bottom: 40px; /* отступ между логотипом и ссылками */
+  margin-left: 6px;
 }
