@@ -11,13 +11,12 @@ body {
   flex-direction: column;
   padding: 20px;
   height: 100vh;
-  position: relative; /* нужно для абсолютного позиционирования линии */
+  position: relative;
 }
 
 .sidebar-logo-wrapper {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   position: relative;
   margin-bottom: 20px;
 }
@@ -42,29 +41,11 @@ body {
   filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.1));
 }
 
-.sidebar-close-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.sidebar-close-icon:hover {
-  opacity: 1;
-  transform: translateY(-50%) scale(1.1);
-}
-
-/* Линия прибита к реальным границам сайдбара */
 .sidebar-divider {
   position: absolute;
   left: 0;
   right: 0;
-  top: 75px; /* расстояние от верхнего края сайдбара до линии, подгони под свой дизайн */
+  top: 75px;
   height: 1px;
   background: rgba(255, 255, 255, 0.1);
 }
@@ -79,17 +60,13 @@ body {
   border-radius: 4px;
 }
 
+.sidebar-divider + .sidebar-links {
+  margin-top: 30px;
+}
+
 .sidebar-link:hover {
   background: #2b2b2b;
   color: #fff;
-}
-
-.page-content {
-  flex: 1;
-  background: #121212;
-  padding: 20px;
-  height: 100vh;
-  overflow-y: auto;
 }
 
 .sidebar-icon {
@@ -101,43 +78,10 @@ body {
   margin-left: 6px;
 }
 
-/* Уровень */
-.sidebar-level {
-  margin-top: 20px; /* отступ от линии под логотипом */
-  padding-right: 30px; /* отступ справа для полосы прогресса */
-}
-
-.sidebar-level-header {
-  display: flex;
-  align-items: center;
-}
-
-.sidebar-level-icon {
-  width: 16px;
-  height: 16px;
-}
-
-.sidebar-level-text {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400; /* regular */
-  font-size: 14px;
-  color: #fff;
-  margin-left: 6px; /* отступ текста от иконки */
-}
-
-.sidebar-level-bar-container {
-  position: relative;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 1px;
-  margin-top: 8px;
-}
-
-.sidebar-level-bar-fill {
-  position: absolute;
-  height: 1px;
-  background: #6234ef;
-  border-radius: 1px;
-  top: 0;
-  left: 0;
+.page-content {
+  flex: 1;
+  background: #121212;
+  padding: 20px;
+  height: 100vh;
+  overflow-y: auto;
 }

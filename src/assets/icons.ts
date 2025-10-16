@@ -6,6 +6,7 @@ import LogoClick from "./icons/Logo_click.svg";
 import CloseSidebarHover from "./icons/Close_sidebar_hover.svg";
 import CloseSidebarClick from "./icons/Close_sidebar_click.svg";
 import Progress from "./icons/Progress.svg";
+import Today from "./icons/Today.svg";
 // Добавляй сюда остальные иконки по аналогии
 
 export {
@@ -17,5 +18,6 @@ export {
   CloseSidebarHover,
   CloseSidebarClick,
   Progress,
+  Today,
   // остальные иконки
 };

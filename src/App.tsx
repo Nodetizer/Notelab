@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from "./sidebar/sidebar";
 import PageContent from "./components/Pages/pageContent";
 import Incoming from "./pages/incoming";
-import Incoming_test from "./pages/incoming_test";
+import Incoming_test from "./pages/today";
 import "./sidebar/sidebar.css";
 
 const App: React.FC = () => {
