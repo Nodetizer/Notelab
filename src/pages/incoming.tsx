@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
 import "./incoming.css";
 import TaskCounter from "../components/Pages/taskCounter";
-import AddTaskButton from "../components/Pages/AddTaskButton";
 import TaskItem from "../components/Pages/TaskItem";
-import FilterIcon from "../assets/icons/Filter.svg"; // <-- импорт иконки фильтра
+import FilterIcon from "../assets/icons/Filter.svg";
 
 export interface Task {
   id: number;
@@ -120,7 +119,11 @@ const Incoming: React.FC = () => {
             <img src={FilterIcon} alt="Filter" className="filter-icon" />
             <span>Фильтр</span>
           </button>
-          <AddTaskButton onClick={handleAddTask} />
+
+          <button className="new-task-btn" onClick={handleAddTask}>
+            <span className="new-task-plus">+</span>
+            <span>Новая задача</span>
+          </button>
         </div>
       </div>
 

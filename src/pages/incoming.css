@@ -1,6 +1,6 @@
 .incoming-page {
   color: #fff;
-  padding: 30px 160px 0 160px; /* сверху 30, по бокам 160 */
+  padding: 30px 160px 0 160px;
   box-sizing: border-box;
 }
 
@@ -11,7 +11,6 @@
   margin-bottom: 20px;
 }
 
-/* Контейнер заголовка и счётчика */
 .incoming-title {
   display: flex;
   flex-direction: column;
@@ -27,16 +26,14 @@
   font-size: 18px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.5);
-  margin-top: 16px; /* отступ от заголовка */
+  margin-top: 16px;
 }
 
-/* Контейнер кнопок */
 .incoming-buttons {
   display: flex;
   align-items: center;
 }
 
-/* Кнопка фильтра */
 .filter-btn {
   width: 115px;
   height: 35px;
@@ -45,24 +42,59 @@
   border-radius: 10px;
   color: #fff;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 400; /* regular */
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 4px; /* вот тут отступ между иконкой и текстом */
   cursor: pointer;
-  transition: background 0.2s ease, border 0.2s ease;
-  margin-right: 18px; /* отступ от кнопки добавления */
+  transition: background 0.2s ease, border 0.2s ease, font-weight 0.2s ease;
+  margin-right: 18px;
 }
 
 .filter-btn:hover {
   background: #6234ef;
   border: none;
+  font-weight: 500; /* medium */
 }
 
 .filter-icon {
   width: 16px;
   height: 16px;
-  margin-right: 4px;
+  /* margin-right: 4px;  <-- убрать, теперь gap у кнопки */
+}
+
+/* Кнопка "Новая задача" */
+.new-task-btn {
+  width: 150px;
+  height: 35px;
+  background-color: #6234ef;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 400; /* regular */
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease,
+    font-weight 0.2s ease;
+}
+
+.new-task-btn:hover {
+  background-color: #5429d4;
+  font-weight: 500; /* medium */
+}
+
+.new-task-btn:active {
+  transform: scale(0.97);
+}
+
+.new-task-plus {
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .incoming-content {
