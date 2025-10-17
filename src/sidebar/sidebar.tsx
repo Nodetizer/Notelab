@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./sidebar.css";
 import { Logo, LogoHover, LogoClick, Incoming, Today } from "./../assets/icons";
 
 const Sidebar: React.FC = () => {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
   const [isLogoClicked, setIsLogoClicked] = useState(false);
+  const location = useLocation();
 
   const getLogo = () => {
     if (isLogoClicked) return LogoClick;
@@ -33,16 +34,27 @@ const Sidebar: React.FC = () => {
 
       <div className="sidebar-divider"></div>
 
-      {/* Ссылки */}
+      {/* Входящие */}
       <div className="sidebar-links">
-        <Link to="/incoming" className="sidebar-link">
+        <Link
+          to="/incoming"
+          className={`sidebar-link ${
+            location.pathname === "/incoming" ? "active" : ""
+          }`}
+        >
           <img src={Incoming} alt="Incoming Icon" className="sidebar-icon" />
           <span className="sidebar-link-text">Входящие</span>
         </Link>
       </div>
 
+      {/* Сегодня */}
       <div className="sidebar-links">
-        <Link to="/today" className="sidebar-link">
+        <Link
+          to="/today"
+          className={`sidebar-link ${
+            location.pathname === "/today" ? "active" : ""
+          }`}
+        >
           <img src={Today} alt="Today Icon" className="sidebar-icon" />
           <span className="sidebar-link-text">Сегодня</span>
         </Link>

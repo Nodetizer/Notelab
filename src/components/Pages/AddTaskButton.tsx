@@ -8,7 +8,8 @@ interface AddTaskButtonProps {
 const AddTaskButton: React.FC<AddTaskButtonProps> = ({ onClick }) => {
   return (
     <button className="add-task-btn" onClick={onClick}>
-      + Добавить задачу
+      <span className="add-task-plus">+</span>
+      <span className="add-task-text">Новая задача</span>
     </button>
   );
 };

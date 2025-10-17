@@ -1,19 +1,29 @@
 .add-task-btn {
-  background-color: #2b2b2b;
+  width: 150px; /* ширина */
+  height: 35px; /* высота */
+  background-color: #6234ef;
   color: #fff;
   border: none;
-  padding: 10px 18px;
   border-radius: 6px;
   cursor: pointer;
+  display: flex; /* flex для плюса и текста */
+  align-items: center; /* вертикальное выравнивание */
+  justify-content: center; /* горизонтальное выравнивание */
+  gap: 6px; /* отступ между плюсом и текстом */
   font-size: 14px;
   font-weight: 500;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .add-task-btn:hover {
-  background-color: #3c3c3c;
+  background-color: #5429d4;
 }
 
 .add-task-btn:active {
   transform: scale(0.97);
+}
+
+.add-task-plus {
+  font-size: 16px;
+  font-weight: bold;
 }

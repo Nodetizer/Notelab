@@ -1,5 +1,7 @@
 .incoming-page {
   color: #fff;
+  padding: 30px 160px 0 160px; /* сверху 30, по бокам 160 */
+  box-sizing: border-box;
 }
 
 .incoming-header {
@@ -9,18 +11,58 @@
   margin-bottom: 20px;
 }
 
-.add-task-btn {
-  background: #141414;
-  color: #ffffff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+/* Контейнер заголовка и счётчика */
+.incoming-title {
+  display: flex;
+  flex-direction: column;
 }
 
-.add-task-btn:hover {
-  background: #333;
+.incoming-header h1 {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.incoming-title .task-counter {
+  font-size: 18px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 16px; /* отступ от заголовка */
+}
+
+/* Контейнер кнопок */
+.incoming-buttons {
+  display: flex;
+  align-items: center;
+}
+
+/* Кнопка фильтра */
+.filter-btn {
+  width: 115px;
+  height: 35px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, border 0.2s ease;
+  margin-right: 18px; /* отступ от кнопки добавления */
+}
+
+.filter-btn:hover {
+  background: #6234ef;
+  border: none;
+}
+
+.filter-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
 }
 
 .incoming-content {
@@ -54,12 +96,6 @@
 
 .empty-text {
   color: #aaa;
-}
-
-.task-counter {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 14px;
-  margin-top: 4px;
 }
 
 .task-item.selected {

@@ -3,6 +3,7 @@ import "./incoming.css";
 import TaskCounter from "../components/Pages/taskCounter";
 import AddTaskButton from "../components/Pages/AddTaskButton";
 import TaskItem from "../components/Pages/TaskItem";
+import FilterIcon from "../assets/icons/Filter.svg"; // <-- импорт иконки фильтра
 
 export interface Task {
   id: number;
@@ -109,11 +110,18 @@ const Incoming: React.FC = () => {
   return (
     <div className="incoming-page">
       <div className="incoming-header">
-        <div>
+        <div className="incoming-title">
           <h1>Входящие</h1>
           <TaskCounter count={activeTasksCount} />
         </div>
-        <AddTaskButton onClick={handleAddTask} />
+
+        <div className="incoming-buttons">
+          <button className="filter-btn">
+            <img src={FilterIcon} alt="Filter" className="filter-icon" />
+            <span>Фильтр</span>
+          </button>
+          <AddTaskButton onClick={handleAddTask} />
+        </div>
       </div>
 
       <div className="incoming-content">

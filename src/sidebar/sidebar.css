@@ -50,22 +50,37 @@ body {
   background: rgba(255, 255, 255, 0.1);
 }
 
+.sidebar-divider + .sidebar-links {
+  margin-top: 30px;
+}
+
+.sidebar-links {
+  margin-bottom: 10px;
+}
+
+/* Ссылка */
 .sidebar-link {
   display: flex;
   align-items: center;
   color: #ccc;
   text-decoration: none;
-  margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 4px;
-}
-
-.sidebar-divider + .sidebar-links {
-  margin-top: 30px;
+  font-size: 14px;
+  font-weight: 400;
+  width: 190px;
+  height: 20px;
+  border-radius: 10px;
+  padding: 9px 0 9px 8px;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .sidebar-link:hover {
-  background: #2b2b2b;
+  background: #6234ef;
+  color: #fff;
+}
+
+/* Активная страница */
+.sidebar-link.active {
+  background: #6234ef;
   color: #fff;
 }
 
