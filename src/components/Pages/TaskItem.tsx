@@ -106,22 +106,30 @@ const TaskItem: React.FC<TaskItemProps> = ({
           />
         </div>
       ) : (
-        <span
-          className={task.completed ? "task-text completed" : "task-text"}
-          onDoubleClick={() =>
-            onStartEditing(task.id, task.text, task.priority, task.dueDate)
-          }
-        >
-          {task.text}{" "}
-          <span className={`priority-label ${task.priority.toLowerCase()}`}>
-            {task.priority}
-          </span>{" "}
-          {task.dueDate && (
-            <span className="task-date">
-              {task.dueDate.toLocaleDateString("ru-RU")}
+        <div className="task-content">
+          <span
+            className={task.completed ? "task-text completed" : "task-text"}
+            onDoubleClick={() =>
+              onStartEditing(task.id, task.text, task.priority, task.dueDate)
+            }
+          >
+            {task.text}
+          </span>
+
+          <div className="task-info">
+            <span className={`priority-label ${task.priority.toLowerCase()}`}>
+              {task.priority}
             </span>
-          )}
-        </span>
+            {task.dueDate && (
+              <span className="task-date">
+                {task.dueDate.toLocaleDateString("ru-RU")}
+              </span>
+            )}
+            {task.tags && task.tags.length > 0 && (
+              <span className="task-tags">{task.tags.join(", ")}</span>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

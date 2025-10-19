@@ -10,6 +10,7 @@ export interface Task {
   completed: boolean;
   priority: "Срочно" | "Высокое" | "Среднее" | "Низкое";
   dueDate?: Date;
+  tags?: string[];
 }
 
 const Incoming: React.FC = () => {
