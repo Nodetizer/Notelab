@@ -1,7 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import "./TaskItem.css";
 import TaskDatePicker from "./TaskDatePicker";
 import type { Task } from "../../pages/incoming";
+import CompletedIcon from "../../assets/icons/Completed.svg";
+import CompletedHoverIcon from "../../assets/icons/Completed_hover.svg";
 
 interface TaskItemProps {
   task: Task;
@@ -38,6 +40,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
   onCancelEditing,
 }) => {
   const editInputRef = useRef<HTMLInputElement | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleEditKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") onSaveEditing();
@@ -50,11 +53,28 @@ const TaskItem: React.FC<TaskItemProps> = ({
 
   return (
     <div className="task-item">
-      <input
-        type="checkbox"
-        checked={task.completed}
-        onChange={() => onToggleComplete(task.id)}
-      />
+      {/* кастомный чекбокс */}
+      <label
+        className="custom-checkbox"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <input
+          type="checkbox"
+          className="custom-checkbox-input"
+          checked={task.completed}
+          onChange={() => onToggleComplete(task.id)}
+          aria-label={task.text}
+        />
+        <span className="custom-checkbox-box" aria-hidden="true">
+          {task.completed && (
+            <img
+              src={isHovered ? CompletedHoverIcon : CompletedIcon}
+              alt="Completed"
+            />
+          )}
+        </span>
+      </label>
 
       {isEditing ? (
         <div className="editing-container">
