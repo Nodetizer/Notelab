@@ -11,6 +11,12 @@
   margin-bottom: 20px;
 }
 
+.incoming-content {
+  padding: 10px;
+  border-top: 1px solid #2b2b2b;
+  margin-left: -10px; /* компенсируем левый паддинг */
+}
+
 .incoming-title {
   display: flex;
   flex-direction: column;

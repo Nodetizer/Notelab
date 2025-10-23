@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import "./today.css";
 import TaskCounter from "../components/Pages/taskCounter";
 import AddTaskButton from "../components/Pages/AddTaskButton";
-import TaskItem from "../components/Pages/TaskItem";
 
 export interface Task {
   id: number;
@@ -19,11 +18,11 @@ const Incoming: React.FC = () => {
     useState<Task["priority"]>("Среднее");
   const [newTaskDate, setNewTaskDate] = useState<Date | undefined>(undefined);
   const [creatingTask, setCreatingTask] = useState(false);
-  const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
-  const [editingText, setEditingText] = useState("");
-  const [editingPriority, setEditingPriority] =
-    useState<Task["priority"]>("Среднее");
-  const [editingDate, setEditingDate] = useState<Date | undefined>(undefined);
+  // const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
+  // const [editingText, setEditingText] = useState("");
+  // const [editingPriority, setEditingPriority] =
+  //   useState<Task["priority"]>("Среднее");
+  // const [editingDate, setEditingDate] = useState<Date | undefined>(undefined);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -57,52 +56,52 @@ const Incoming: React.FC = () => {
     }
   };
 
-  const toggleTaskCompletion = (id: number) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
-  };
+  // const toggleTaskCompletion = (id: number) => {
+  //   setTasks((prev) =>
+  //     prev.map((task) =>
+  //       task.id === id ? { ...task, completed: !task.completed } : task
+  //     )
+  //   );
+  // };
 
-  const startEditing = (
-    taskId: number,
-    currentText: string,
-    currentPriority: Task["priority"],
-    currentDate?: Date
-  ) => {
-    setEditingTaskId(taskId);
-    setEditingText(currentText);
-    setEditingPriority(currentPriority);
-    setEditingDate(currentDate);
-  };
+  // const startEditing = (
+  //   taskId: number,
+  //   currentText: string,
+  //   currentPriority: Task["priority"],
+  //   currentDate?: Date
+  // ) => {
+  //   setEditingTaskId(taskId);
+  //   setEditingText(currentText);
+  //   setEditingPriority(currentPriority);
+  //   setEditingDate(currentDate);
+  // };
 
-  const saveEditing = () => {
-    if (editingTaskId !== null && editingText.trim() !== "") {
-      setTasks((prev) =>
-        prev.map((task) =>
-          task.id === editingTaskId
-            ? {
-                ...task,
-                text: editingText,
-                priority: editingPriority,
-                dueDate: editingDate,
-              }
-            : task
-        )
-      );
-      cancelEditing();
-    } else {
-      cancelEditing();
-    }
-  };
+  // const saveEditing = () => {
+  //   if (editingTaskId !== null && editingText.trim() !== "") {
+  //     setTasks((prev) =>
+  //       prev.map((task) =>
+  //         task.id === editingTaskId
+  //           ? {
+  //               ...task,
+  //               text: editingText,
+  //               priority: editingPriority,
+  //               dueDate: editingDate,
+  //             }
+  //           : task
+  //       )
+  //     );
+  //     cancelEditing();
+  //   } else {
+  //     cancelEditing();
+  //   }
+  // };
 
-  const cancelEditing = () => {
-    setEditingTaskId(null);
-    setEditingText("");
-    setEditingPriority("Среднее");
-    setEditingDate(undefined);
-  };
+  // const cancelEditing = () => {
+  //   setEditingTaskId(null);
+  //   setEditingText("");
+  //   setEditingPriority("Среднее");
+  //   setEditingDate(undefined);
+  // };
 
   const activeTasksCount = tasks.filter((t) => !t.completed).length;
 
@@ -148,7 +147,7 @@ const Incoming: React.FC = () => {
           <p className="empty-text">Пока задач нет</p>
         )}
 
-        {tasks.map((task) => (
+        {/* {tasks.map((task) => (
           <TaskItem
             key={task.id}
             task={task}
@@ -164,7 +163,7 @@ const Incoming: React.FC = () => {
             onSaveEditing={saveEditing}
             onCancelEditing={cancelEditing}
           />
-        ))}
+        ))} */}
       </div>
     </div>
   );
