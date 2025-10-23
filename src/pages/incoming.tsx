@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./incoming.css";
 import TaskCounter from "../components/Pages/taskCounter";
 import FilterIcon from "../assets/icons/Filter.svg";
@@ -8,6 +8,17 @@ interface Task {
   text: string;
   completed: boolean;
 }
+
+type HistoryAction =
+  | { type: "CREATE"; task: Task }
+  | { type: "DELETE"; task: Task }
+  | { type: "EDIT"; taskId: number; oldText: string; newText: string }
+  | {
+      type: "TOGGLE";
+      taskId: number;
+      oldCompleted: boolean;
+      newCompleted: boolean;
+    };
 
 const Incoming: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>(() => {
@@ -24,9 +35,65 @@ const Incoming: React.FC = () => {
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
   const [editingText, setEditingText] = useState("");
 
+  const [history, setHistory] = useState<HistoryAction[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+
   useEffect(() => {
     localStorage.setItem("incoming-tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  // Сохраняем действие в историю
+  const pushToHistory = useCallback(
+    (action: HistoryAction) => {
+      setHistory((prev) => {
+        const newHistory = prev.slice(0, historyIndex + 1);
+        newHistory.push(action);
+        return newHistory;
+      });
+      setHistoryIndex((prev) => prev + 1);
+    },
+    [historyIndex]
+  );
+
+  // Отмена действия
+  const undo = useCallback(() => {
+    if (historyIndex >= 0) {
+      const action = history[historyIndex];
+
+      switch (action.type) {
+        case "CREATE":
+          // Отмена создания - удаляем задачу
+          setTasks((prev) => prev.filter((task) => task.id !== action.task.id));
+          break;
+        case "DELETE":
+          // Отмена удаления - восстанавливаем задачу
+          setTasks((prev) => [...prev, action.task]);
+          break;
+        case "EDIT":
+          // Отмена редактирования - восстанавливаем старый текст
+          setTasks((prev) =>
+            prev.map((task) =>
+              task.id === action.taskId
+                ? { ...task, text: action.oldText }
+                : task
+            )
+          );
+          break;
+        case "TOGGLE":
+          // Отмена переключения - восстанавливаем старый статус
+          setTasks((prev) =>
+            prev.map((task) =>
+              task.id === action.taskId
+                ? { ...task, completed: action.oldCompleted }
+                : task
+            )
+          );
+          break;
+      }
+
+      setHistoryIndex((prev) => prev - 1);
+    }
+  }, [history, historyIndex]);
 
   // Обработчик нажатия клавиш
   useEffect(() => {
@@ -36,13 +103,19 @@ const Incoming: React.FC = () => {
         e.preventDefault();
         deleteTask(selectedTaskId);
       }
+
+      // Отмена действия по Ctrl+Z
+      if (e.ctrlKey && e.key === "z") {
+        e.preventDefault();
+        undo();
+      }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [selectedTaskId]);
+  }, [selectedTaskId, undo]);
 
   const handleAddTask = () => setCreatingTask(true);
 
@@ -55,21 +128,42 @@ const Incoming: React.FC = () => {
       completed: false,
     };
 
+    // Сохраняем в историю
+    pushToHistory({
+      type: "CREATE",
+      task: newTask,
+    });
+
     setTasks((prev) => [...prev, newTask]);
     setNewTaskText("");
     setCreatingTask(false);
+  };
+
+  const cancelCreateTask = () => {
+    setCreatingTask(false);
+    setNewTaskText("");
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       createTask();
     } else if (e.key === "Escape") {
-      setCreatingTask(false);
-      setNewTaskText("");
+      cancelCreateTask();
     }
   };
 
   const toggleTaskCompletion = (id: number) => {
+    const task = tasks.find((t) => t.id === id);
+    if (!task) return;
+
+    // Сохраняем в историю ДО изменения
+    pushToHistory({
+      type: "TOGGLE",
+      taskId: id,
+      oldCompleted: task.completed,
+      newCompleted: !task.completed,
+    });
+
     setTasks((prev) =>
       prev.map((task) =>
         task.id === id ? { ...task, completed: !task.completed } : task
@@ -88,6 +182,17 @@ const Incoming: React.FC = () => {
 
   const saveEditing = (id: number) => {
     if (editingText.trim() === "") return;
+
+    const task = tasks.find((t) => t.id === id);
+    if (!task) return;
+
+    // Сохраняем в историю ДО изменения
+    pushToHistory({
+      type: "EDIT",
+      taskId: id,
+      oldText: task.text,
+      newText: editingText.trim(),
+    });
 
     setTasks((prev) =>
       prev.map((task) =>
@@ -116,8 +221,17 @@ const Incoming: React.FC = () => {
 
   // Функция удаления задачи
   const deleteTask = (id: number) => {
+    const taskToDelete = tasks.find((task) => task.id === id);
+    if (!taskToDelete) return;
+
+    // Сохраняем в историю ДО удаления
+    pushToHistory({
+      type: "DELETE",
+      task: taskToDelete,
+    });
+
     setTasks((prev) => prev.filter((task) => task.id !== id));
-    // Снимаем выделение если удаляем выбранную задачу
+
     if (selectedTaskId === id) {
       setSelectedTaskId(null);
     }
