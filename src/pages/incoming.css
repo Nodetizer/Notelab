@@ -14,7 +14,7 @@
 .incoming-content {
   padding: 10px;
   border-top: 1px solid #2b2b2b;
-  margin-left: -10px; /* компенсируем левый паддинг */
+  margin-left: -10px;
 }
 
 .incoming-title {
@@ -48,11 +48,11 @@
   border-radius: 10px;
   color: #fff;
   font-size: 14px;
-  font-weight: 400; /* regular */
+  font-weight: 400;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px; /* вот тут отступ между иконкой и текстом */
+  gap: 4px;
   cursor: pointer;
   transition: background 0.2s ease, border 0.2s ease, font-weight 0.2s ease;
   margin-right: 18px;
@@ -61,16 +61,14 @@
 .filter-btn:hover {
   background: #6234ef;
   border: none;
-  font-weight: 500; /* medium */
+  font-weight: 500;
 }
 
 .filter-icon {
   width: 16px;
   height: 16px;
-  /* margin-right: 4px;  <-- убрать, теперь gap у кнопки */
 }
 
-/* Кнопка "Новая задача" */
 .new-task-btn {
   width: 150px;
   height: 35px;
@@ -83,7 +81,7 @@
   justify-content: center;
   gap: 6px;
   font-size: 14px;
-  font-weight: 400; /* regular */
+  font-weight: 400;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease,
     font-weight 0.2s ease;
@@ -91,7 +89,7 @@
 
 .new-task-btn:hover {
   background-color: #5429d4;
-  font-weight: 500; /* medium */
+  font-weight: 500;
 }
 
 .new-task-btn:active {
@@ -103,33 +101,80 @@
   font-weight: bold;
 }
 
-.incoming-content {
-  padding: 10px;
-  border-top: 1px solid #2b2b2b;
-}
-
+/* Стили для задач */
 .task-item {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  padding: 18px 20px;
+  border-radius: 10px !important; /* принудительно 10px */
+  transition: background-color 0.2s ease;
+  margin-left: -20px;
+  margin-right: -20px;
+  cursor: pointer;
 }
 
-.task-input {
-  flex: 1;
-  padding: 6px 10px;
-  border: 1px solid #444;
-  border-radius: 4px;
-  background: #1b1b1b;
-  color: #fff;
+.task-item:hover:not(.selected) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  margin-right: 1px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: all 0.2s ease;
+}
+
+.task-checkbox:hover {
+  border-color: rgba(255, 255, 255, 1);
+}
+
+.task-checkbox:checked {
+  background: #6234ef;
+  border-color: #6234ef;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+  background-size: 12px 12px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .task-text {
+  font-size: 20px;
+  font-weight: 400;
+  color: #fff;
   margin-left: 10px;
 }
 
-.completed {
+.task-text.completed {
   text-decoration: line-through;
-  color: #888;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Исправляем создание задачи */
+.task-item.creating {
+  border-radius: 10px !important; /* явно указываем радиус */
+}
+
+.task-input.creating {
+  flex: 1;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 0 !important; /* убираем радиус у инпута */
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 400;
+  outline: none;
+}
+
+.task-input.creating::placeholder {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .empty-text {
@@ -137,6 +182,24 @@
 }
 
 .task-item.selected {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-radius: 6px;
+  background-color: rgba(
+    98,
+    52,
+    239,
+    0.2
+  ) !important; /* #6234EF с 20% непрозрачности */
+  border-radius: 10px !important;
+}
+
+.task-input.editing {
+  flex: 1;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 400;
+  outline: none;
+  margin-left: 10px;
 }

@@ -9,7 +9,6 @@ import Progress from "./icons/Progress.svg";
 import Today from "./icons/Today.svg";
 import Filter from "./icons/Filter.svg";
 import Completed from "./icons/Completed.svg";
-import Completed_hover from "./icons/Completed_hover.svg";
 // Добавляй сюда остальные иконки по аналогии
 
 export {
@@ -24,6 +23,5 @@ export {
   Today,
   Filter,
   Completed,
-  Completed_hover,
   // остальные иконки
 };
