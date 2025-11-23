@@ -1,80 +1,70 @@
 /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
 .incoming-content {
   padding: 24px;
-  background: #141414; /* Темный фон страницы */
-  min-height: 100vh; /* Занимает всю высоту экрана */
-  border: none !important; /* На всякий случай убираем все границы */
-  box-shadow: none !important; /* И тени на всякий случай */
-  outline: none !important; /* И контуры */
+  background: #141414;
+  min-height: 100vh;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 /* ===== ШАПКА С ЗАГОЛОВКОМ И КНОПКАМИ ===== */
 .incoming-header {
   display: flex;
-  justify-content: space-between; /* Распределяем пространство между заголовком и кнопками */
+  justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 24px;
 }
 
 .incoming-title-section {
   display: flex;
-  flex-direction: column; /* Заголовок и счетчик задач в колонку */
+  flex-direction: column;
 }
 
 .incoming-title {
   color: #fff !important;
-  margin: 0 !important; /* Убираем стандартные отступы */
+  margin: 0 !important;
 }
 
 .incoming-actions {
   display: flex;
   align-items: center;
-  gap: 8px; /* Расстояние между кнопками */
+  gap: 8px;
 }
 
 /* ===== СТИЛИ КНОПОК ===== */
 .filter-btn {
-  background: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый */
+  background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
 }
 
 .filter-btn:hover {
-  background: #6234ef; /* Основной фиолетовый цвет при наведении */
+  background: #6234ef;
   border-color: #6234ef;
   color: #fff;
 }
 
 .new-task-btn {
-  background: #6234ef; /* Основной фиолетовый */
+  background: #6234ef;
   border-color: #6234ef;
 }
 
 .new-task-btn:hover {
-  background: #5429d4; /* Более темный фиолетовый при наведении */
+  background: #5429d4;
   border-color: #5429d4;
-}
-
-.undo-btn:not([disabled]) {
-  color: #fff;
-  border-color: #444;
-}
-
-.undo-btn:not([disabled]):hover {
-  border-color: #6234ef;
-  color: #6234ef;
 }
 
 /* ===== РАЗДЕЛИТЕЛЬНАЯ ЛИНИЯ ===== */
 .incoming-divider {
-  background: #303030; /* Темно-серая линия */
+  background: #303030;
   margin: 16px 0;
 }
 
 /* ===== КАРТОЧКА СОЗДАНИЯ НОВОЙ ЗАДАЧИ ===== */
 .creating-task-card {
-  background: #262626; /* Фон карточки */
-  border: 1px solid #404040; /* Граница карточки */
+  background: #262626;
+  border: 1px solid #404040;
   margin-bottom: 8px;
 }
 
@@ -89,62 +79,52 @@
 /* ===== ПОЛЯ ВВОДА ===== */
 .creating-task-input,
 .editing-task-input {
-  background: #1f1f1f; /* Темный фон поля ввода */
-  border-color: #404040; /* Цвет границы */
-  color: #fff; /* Белый текст */
+  background: #1f1f1f;
+  border-color: #404040;
+  color: #fff;
 }
 
 .creating-task-input::placeholder,
 .editing-task-input::placeholder {
-  color: rgba(255, 255, 255, 0.5); /* Полупрозрачный placeholder */
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* ===== ЭЛЕМЕНТЫ СПИСКА ЗАДАЧ ===== */
 .task-item {
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 8px; /* Закругленные углы */
+  border-radius: 8px;
   padding: 12px;
   margin: 4px 0;
-  cursor: pointer; /* Курсор-указатель при наведении */
-  transition: all 0.2s ease; /* Плавные анимации */
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .task-item:hover {
-  background: rgba(
-    255,
-    255,
-    255,
-    0.05
-  ); /* Легкое подсвечивание при наведении */
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .task-item-selected {
-  background: rgba(
-    98,
-    52,
-    239,
-    0.2
-  ) !important; /* Фиолетовый фон для выбранной задачи */
-  border-color: #6234ef !important; /* Фиолетовая граница */
+  background: rgba(98, 52, 239, 0.2) !important;
+  border-color: #6234ef !important;
 }
 
 /* ===== ЧЕКБОКСЫ ЗАДАЧ ===== */
 .task-checkbox .ant-checkbox-inner {
-  background: rgba(255, 255, 255, 0.1); /* Полупрозрачный фон */
-  border-color: rgba(255, 255, 255, 0.3); /* Светлая граница */
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .task-checkbox .ant-checkbox-checked .ant-checkbox-inner {
-  background: #6234ef; /* Фиолетовый фон при выборе */
-  border-color: #6234ef; /* Фиолетовая граница при выборе */
+  background: #6234ef;
+  border-color: #6234ef;
 }
 
 /* ===== СОДЕРЖИМОЕ ЗАДАЧИ ===== */
 .task-content {
   display: flex;
   flex-direction: column;
-  gap: 4px; /* Расстояние между элементами */
+  gap: 4px;
 }
 
 .task-text {
@@ -154,14 +134,14 @@
 }
 
 .task-text-completed {
-  color: #8c8c8c; /* Серый цвет для выполненных задач */
-  text-decoration: line-through; /* Зачеркивание текста */
+  color: #8c8c8c;
+  text-decoration: line-through;
 }
 
 /* ===== МЕТА-ИНФОРМАЦИЯ ЗАДАЧИ (ТЕГИ И ДАТЫ) ===== */
 .task-meta {
   display: flex;
-  justify-content: space-between; /* Теги слева, даты справа */
+  justify-content: space-between;
   align-items: flex-start;
   margin-top: 4px;
   gap: 16px;
@@ -169,45 +149,45 @@
 
 .task-tags {
   display: flex;
-  gap: 8px; /* Расстояние между тегами */
+  gap: 8px;
 }
 
 .priority-tag,
 .complexity-tag {
-  border: none; /* Убираем стандартную границу */
-  font-weight: 500; /* Полужирный шрифт */
+  border: none;
+  font-weight: 500;
 }
 
 /* ===== ВЫПАДАЮЩИЕ СПИСКИ ===== */
 .priority-select,
 .complexity-select {
-  width: 120px; /* Фиксированная ширина */
+  width: 120px;
 }
 
 .priority-select .ant-select-selector,
 .complexity-select .ant-select-selector {
-  background: #1f1f1f !important; /* Темный фон */
-  border-color: #404040 !important; /* Темная граница */
-  color: #fff !important; /* Белый текст */
+  background: #1f1f1f !important;
+  border-color: #404040 !important;
+  color: #fff !important;
 }
 
 /* ===== ИКОНКИ ДЕЙСТВИЙ ===== */
 .edit-icon {
-  color: #1890ff; /* Синий цвет иконки редактирования */
+  color: #1890ff;
   font-size: 16px;
 }
 
 .edit-icon:hover {
-  color: #40a9ff; /* Более светлый синий при наведении */
+  color: #40a9ff;
 }
 
 .delete-icon {
-  color: #ff4d4f; /* Красный цвет иконки удаления */
+  color: #ff4d4f;
   font-size: 16px;
 }
 
 .delete-icon:hover {
-  color: #ff7875; /* Более светлый красный при наведении */
+  color: #ff7875;
 }
 
 /* ===== РЕДАКТИРОВАНИЕ ЗАДАЧИ ===== */
@@ -217,103 +197,103 @@
 
 /* ===== СОСТОЯНИЕ ПУСТОГО СПИСКА ===== */
 .ant-empty-description {
-  color: rgba(255, 255, 255, 0.5); /* Полупрозрачный текст */
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* ===== ВЫБОР ДАТЫ (ДЕДЛАЙН) ===== */
 .due-date-picker {
-  width: 140px; /* Фиксированная ширина */
+  width: 140px;
 }
 
 .due-date-picker .ant-picker-input > input {
-  color: #fff; /* Белый текст в поле даты */
+  color: #fff;
 }
 
 .due-date-picker .ant-picker-suffix {
-  color: rgba(255, 255, 255, 0.5); /* Полупрозрачная иконка календаря */
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* ===== БЛОК С ДАТАМИ ===== */
 .task-dates {
   display: flex;
-  flex-direction: column; /* Даты в колонку */
-  gap: 2px; /* Маленькое расстояние между датами */
-  font-size: 12px; /* Меньший размер шрифта */
-  color: rgba(255, 255, 255, 0.6); /* Полупрозрачный текст */
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .created-date,
 .due-date {
   display: flex;
   align-items: center;
-  gap: 4px; /* Расстояние между иконкой и текстом */
+  gap: 4px;
 }
 
 /* ===== ЦВЕТА ДЛЯ СРОКОВ ВЫПОЛНЕНИЯ ===== */
 .due-date-overdue {
-  color: #ff4d4f !important; /* Красный - просрочено */
+  color: #ff4d4f !important;
   font-weight: 500;
 }
 
 .due-date-urgent {
-  color: #fa8c16 !important; /* Оранжевый - срочно (сегодня) */
+  color: #fa8c16 !important;
   font-weight: 500;
 }
 
 .due-date-soon {
-  color: #faad14 !important; /* Желтый - скоро (2-3 дня) */
+  color: #faad14 !important;
 }
 
 .due-date-normal {
-  color: #52c41a !important; /* Зеленый - нормально (больше 3 дней) */
+  color: #52c41a !important;
 }
 
 /* ===== ПЕРЕОПРЕДЕЛЕНИЯ СТИЛЕЙ ANT DESIGN ===== */
 
 /* Элементы списка */
 .ant-list-item {
-  border-bottom: 1px solid #303030 !important; /* Темные разделители */
+  border-bottom: 1px solid #303030 !important;
 }
 
 .ant-list-item:last-child {
-  border-bottom: none !important; /* Убираем границу у последнего элемента */
+  border-bottom: none !important;
 }
 
 .ant-list-item-meta-content {
-  width: 100%; /* Занимает всю ширину */
+  width: 100%;
 }
 
 .ant-checkbox-wrapper {
-  margin-right: 12px; /* Отступ от чекбокса */
+  margin-right: 12px;
 }
 
 /* Выпадающие списки */
 .ant-select-dropdown {
-  background: #1f1f1f !important; /* Темный фон выпадающего списка */
+  background: #1f1f1f !important;
   border: 1px solid #404040;
 }
 
 .ant-select-item {
-  color: #fff !important; /* Белый текст в списке */
+  color: #fff !important;
 }
 
 .ant-select-item-option-selected {
-  background: #6234ef !important; /* Фиолетовый фон выбранного элемента */
+  background: #6234ef !important;
 }
 
 .ant-select-item-option-active {
-  background: rgba(255, 255, 255, 0.1) !important; /* Подсветка при наведении */
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Подтверждающие попапы (удаление) */
 .ant-popconfirm .ant-popover-inner {
-  background: #1f1f1f; /* Темный фон */
+  background: #1f1f1f;
   border: 1px solid #404040;
 }
 
 .ant-popconfirm .ant-popover-title {
   color: #fff;
-  border-bottom: 1px solid #303030; /* Разделительная линия */
+  border-bottom: 1px solid #303030;
 }
 
 .ant-popconfirm .ant-popover-inner-content {
@@ -327,20 +307,15 @@
 }
 
 .ant-picker-header button {
-  color: #fff !important; /* Белые кнопки в календаре */
+  color: #fff !important;
 }
 
 .ant-picker-content th {
-  color: rgba(
-    255,
-    255,
-    255,
-    0.6
-  ) !important; /* Полупрозрачные заголовки дней */
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 
 .ant-picker-cell {
-  color: #fff !important; /* Белые числа */
+  color: #fff !important;
 }
 
 .ant-picker-cell-in-view {
@@ -348,19 +323,13 @@
 }
 
 .ant-picker-cell-disabled {
-  color: rgba(
-    255,
-    255,
-    255,
-    0.3
-  ) !important; /* Более прозрачные недоступные даты */
+  color: rgba(255, 255, 255, 0.3) !important;
 }
 
 .ant-picker-today-btn {
-  color: #6234ef !important; /* Фиолетовая кнопка "Сегодня" */
+  color: #6234ef !important;
 }
 
-/* Отключенные кнопки */
 .ant-btn-primary:disabled {
   background: rgba(255, 255, 255, 0.1) !important;
   border-color: #404040 !important;
@@ -370,32 +339,32 @@
 /* ===== АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ ===== */
 @media (max-width: 768px) {
   .incoming-content {
-    padding: 16px; /* Меньшие отступы */
+    padding: 16px;
   }
 
   .incoming-header {
-    flex-direction: column; /* Заголовок и кнопки в колонку */
+    flex-direction: column;
     gap: 16px;
     align-items: flex-start;
   }
 
   .incoming-actions {
     width: 100%;
-    justify-content: flex-start; /* Кнопки выравниваем по левому краю */
+    justify-content: flex-start;
   }
 
   .task-meta {
-    flex-direction: column; /* Теги и даты в колонку */
+    flex-direction: column;
     gap: 8px;
   }
 
   .task-dates {
-    flex-direction: row; /* Даты в строку на мобильных */
+    flex-direction: row;
     gap: 12px;
   }
 
   .creating-task-content .ant-space-item {
-    width: 100%; /* Полная ширина для элементов формы */
+    width: 100%;
   }
 
   .creating-task-input,
@@ -405,37 +374,37 @@
 
   .priority-select,
   .complexity-select {
-    width: 100px; /* Уже выпадающие списки */
+    width: 100px;
   }
 
   .due-date-picker {
-    width: 120px; /* Уже выбор даты */
+    width: 120px;
   }
 }
 
 /* ===== АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ ===== */
 @media (max-width: 480px) {
   .incoming-content {
-    padding: 12px; /* Еще меньшие отступы */
+    padding: 12px;
   }
 
   .incoming-actions {
-    flex-direction: column; /* Кнопки в колонку */
+    flex-direction: column;
     gap: 8px;
     width: 100%;
   }
 
   .incoming-actions .ant-btn {
-    width: 100%; /* Полная ширина кнопок */
-    justify-content: center; /* Центрируем текст */
+    width: 100%;
+    justify-content: center;
   }
 
   .task-dates {
-    flex-direction: column; /* Даты снова в колонку на очень маленьких экранах */
+    flex-direction: column;
     gap: 4px;
   }
 
   .creating-task-card .ant-card-body {
-    padding: 12px; /* Меньшие отступы в карточке */
+    padding: 12px;
   }
 }

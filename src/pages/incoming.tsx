@@ -20,7 +20,6 @@ import {
   PlusOutlined,
   DeleteOutlined,
   EditOutlined,
-  UndoOutlined,
   SaveOutlined,
   CloseOutlined,
   CalendarOutlined,
@@ -410,14 +409,6 @@ const Incoming: React.FC = () => {
             className="new-task-btn"
           >
             Новая задача
-          </Button>
-          <Button
-            icon={<UndoOutlined />}
-            onClick={undo}
-            disabled={historyIndex < 0}
-            className="undo-btn"
-          >
-            Отменить
           </Button>
         </Space>
       </div>
