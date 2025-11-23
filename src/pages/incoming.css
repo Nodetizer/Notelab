@@ -1,59 +1,57 @@
-.incoming-page {
+/* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
+.incoming-content {
   padding: 24px;
-  background: #141414;
-  min-height: 100vh;
+  background: #141414; /* Темный фон страницы */
+  min-height: 100vh; /* Занимает всю высоту экрана */
+  border: none !important; /* На всякий случай убираем все границы */
+  box-shadow: none !important; /* И тени на всякий случай */
+  outline: none !important; /* И контуры */
 }
 
-.incoming-card {
-  background: #1f1f1f;
-  border: 1px solid #303030;
-}
-
-.incoming-card .ant-card-body {
-  padding: 24px;
-}
-
+/* ===== ШАПКА С ЗАГОЛОВКОМ И КНОПКАМИ ===== */
 .incoming-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Распределяем пространство между заголовком и кнопками */
   align-items: flex-start;
   margin-bottom: 24px;
 }
 
 .incoming-title-section {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Заголовок и счетчик задач в колонку */
 }
 
 .incoming-title {
   color: #fff !important;
-  margin: 0 !important;
+  margin: 0 !important; /* Убираем стандартные отступы */
 }
 
 .incoming-actions {
   display: flex;
   align-items: center;
+  gap: 8px; /* Расстояние между кнопками */
 }
 
+/* ===== СТИЛИ КНОПОК ===== */
 .filter-btn {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый */
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
 }
 
 .filter-btn:hover {
-  background: #6234ef;
+  background: #6234ef; /* Основной фиолетовый цвет при наведении */
   border-color: #6234ef;
   color: #fff;
 }
 
 .new-task-btn {
-  background: #6234ef;
+  background: #6234ef; /* Основной фиолетовый */
   border-color: #6234ef;
 }
 
 .new-task-btn:hover {
-  background: #5429d4;
+  background: #5429d4; /* Более темный фиолетовый при наведении */
   border-color: #5429d4;
 }
 
@@ -67,15 +65,16 @@
   color: #6234ef;
 }
 
+/* ===== РАЗДЕЛИТЕЛЬНАЯ ЛИНИЯ ===== */
 .incoming-divider {
-  background: #303030;
+  background: #303030; /* Темно-серая линия */
   margin: 16px 0;
 }
 
-/* Creating Task */
+/* ===== КАРТОЧКА СОЗДАНИЯ НОВОЙ ЗАДАЧИ ===== */
 .creating-task-card {
-  background: #262626;
-  border: 1px solid #404040;
+  background: #262626; /* Фон карточки */
+  border: 1px solid #404040; /* Граница карточки */
   margin-bottom: 8px;
 }
 
@@ -87,52 +86,65 @@
   width: 100%;
 }
 
+/* ===== ПОЛЯ ВВОДА ===== */
 .creating-task-input,
 .editing-task-input {
-  background: #1f1f1f;
-  border-color: #404040;
-  color: #fff;
+  background: #1f1f1f; /* Темный фон поля ввода */
+  border-color: #404040; /* Цвет границы */
+  color: #fff; /* Белый текст */
 }
 
 .creating-task-input::placeholder,
 .editing-task-input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.5); /* Полупрозрачный placeholder */
 }
 
-/* Tasks List */
+/* ===== ЭЛЕМЕНТЫ СПИСКА ЗАДАЧ ===== */
 .task-item {
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 8px; /* Закругленные углы */
   padding: 12px;
   margin: 4px 0;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  cursor: pointer; /* Курсор-указатель при наведении */
+  transition: all 0.2s ease; /* Плавные анимации */
 }
 
 .task-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(
+    255,
+    255,
+    255,
+    0.05
+  ); /* Легкое подсвечивание при наведении */
 }
 
 .task-item-selected {
-  background: rgba(98, 52, 239, 0.2) !important;
-  border-color: #6234ef !important;
+  background: rgba(
+    98,
+    52,
+    239,
+    0.2
+  ) !important; /* Фиолетовый фон для выбранной задачи */
+  border-color: #6234ef !important; /* Фиолетовая граница */
 }
 
+/* ===== ЧЕКБОКСЫ ЗАДАЧ ===== */
 .task-checkbox .ant-checkbox-inner {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1); /* Полупрозрачный фон */
+  border-color: rgba(255, 255, 255, 0.3); /* Светлая граница */
 }
 
 .task-checkbox .ant-checkbox-checked .ant-checkbox-inner {
-  background: #6234ef;
-  border-color: #6234ef;
+  background: #6234ef; /* Фиолетовый фон при выборе */
+  border-color: #6234ef; /* Фиолетовая граница при выборе */
 }
 
+/* ===== СОДЕРЖИМОЕ ЗАДАЧИ ===== */
 .task-content {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 4px; /* Расстояние между элементами */
 }
 
 .task-text {
@@ -142,79 +154,14 @@
 }
 
 .task-text-completed {
-  color: #8c8c8c;
-  text-decoration: line-through;
+  color: #8c8c8c; /* Серый цвет для выполненных задач */
+  text-decoration: line-through; /* Зачеркивание текста */
 }
 
+/* ===== МЕТА-ИНФОРМАЦИЯ ЗАДАЧИ (ТЕГИ И ДАТЫ) ===== */
 .task-meta {
   display: flex;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.priority-tag,
-.complexity-tag {
-  border: none;
-  font-weight: 500;
-}
-
-.priority-select,
-.complexity-select {
-  width: 120px;
-}
-
-.priority-select .ant-select-selector,
-.complexity-select .ant-select-selector {
-  background: #1f1f1f !important;
-  border-color: #404040 !important;
-  color: #fff !important;
-}
-
-/* Icons */
-.edit-icon {
-  color: #1890ff;
-  font-size: 16px;
-}
-
-.edit-icon:hover {
-  color: #40a9ff;
-}
-
-.delete-icon {
-  color: #ff4d4f;
-  font-size: 16px;
-}
-
-.delete-icon:hover {
-  color: #ff7875;
-}
-
-/* Editing Task */
-.editing-task-content {
-  width: 100%;
-}
-
-/* Empty State */
-.ant-empty-description {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-/* Date Styles */
-.due-date-picker {
-  width: 140px;
-}
-
-.due-date-picker .ant-picker-input > input {
-  color: #fff;
-}
-
-.due-date-picker .ant-picker-suffix {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.task-meta {
-  display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Теги слева, даты справа */
   align-items: flex-start;
   margin-top: 4px;
   gap: 16px;
@@ -222,51 +169,273 @@
 
 .task-tags {
   display: flex;
-  gap: 8px;
+  gap: 8px; /* Расстояние между тегами */
 }
 
+.priority-tag,
+.complexity-tag {
+  border: none; /* Убираем стандартную границу */
+  font-weight: 500; /* Полужирный шрифт */
+}
+
+/* ===== ВЫПАДАЮЩИЕ СПИСКИ ===== */
+.priority-select,
+.complexity-select {
+  width: 120px; /* Фиксированная ширина */
+}
+
+.priority-select .ant-select-selector,
+.complexity-select .ant-select-selector {
+  background: #1f1f1f !important; /* Темный фон */
+  border-color: #404040 !important; /* Темная граница */
+  color: #fff !important; /* Белый текст */
+}
+
+/* ===== ИКОНКИ ДЕЙСТВИЙ ===== */
+.edit-icon {
+  color: #1890ff; /* Синий цвет иконки редактирования */
+  font-size: 16px;
+}
+
+.edit-icon:hover {
+  color: #40a9ff; /* Более светлый синий при наведении */
+}
+
+.delete-icon {
+  color: #ff4d4f; /* Красный цвет иконки удаления */
+  font-size: 16px;
+}
+
+.delete-icon:hover {
+  color: #ff7875; /* Более светлый красный при наведении */
+}
+
+/* ===== РЕДАКТИРОВАНИЕ ЗАДАЧИ ===== */
+.editing-task-content {
+  width: 100%;
+}
+
+/* ===== СОСТОЯНИЕ ПУСТОГО СПИСКА ===== */
+.ant-empty-description {
+  color: rgba(255, 255, 255, 0.5); /* Полупрозрачный текст */
+}
+
+/* ===== ВЫБОР ДАТЫ (ДЕДЛАЙН) ===== */
+.due-date-picker {
+  width: 140px; /* Фиксированная ширина */
+}
+
+.due-date-picker .ant-picker-input > input {
+  color: #fff; /* Белый текст в поле даты */
+}
+
+.due-date-picker .ant-picker-suffix {
+  color: rgba(255, 255, 255, 0.5); /* Полупрозрачная иконка календаря */
+}
+
+/* ===== БЛОК С ДАТАМИ ===== */
 .task-dates {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  flex-direction: column; /* Даты в колонку */
+  gap: 2px; /* Маленькое расстояние между датами */
+  font-size: 12px; /* Меньший размер шрифта */
+  color: rgba(255, 255, 255, 0.6); /* Полупрозрачный текст */
 }
 
 .created-date,
 .due-date {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 4px; /* Расстояние между иконкой и текстом */
 }
 
+/* ===== ЦВЕТА ДЛЯ СРОКОВ ВЫПОЛНЕНИЯ ===== */
 .due-date-overdue {
-  color: #ff4d4f !important;
+  color: #ff4d4f !important; /* Красный - просрочено */
   font-weight: 500;
 }
 
 .due-date-urgent {
-  color: #fa8c16 !important;
+  color: #fa8c16 !important; /* Оранжевый - срочно (сегодня) */
   font-weight: 500;
 }
 
 .due-date-soon {
-  color: #faad14 !important;
+  color: #faad14 !important; /* Желтый - скоро (2-3 дня) */
 }
 
 .due-date-normal {
-  color: #52c41a !important;
+  color: #52c41a !important; /* Зеленый - нормально (больше 3 дней) */
 }
 
-/* Responsive */
+/* ===== ПЕРЕОПРЕДЕЛЕНИЯ СТИЛЕЙ ANT DESIGN ===== */
+
+/* Элементы списка */
+.ant-list-item {
+  border-bottom: 1px solid #303030 !important; /* Темные разделители */
+}
+
+.ant-list-item:last-child {
+  border-bottom: none !important; /* Убираем границу у последнего элемента */
+}
+
+.ant-list-item-meta-content {
+  width: 100%; /* Занимает всю ширину */
+}
+
+.ant-checkbox-wrapper {
+  margin-right: 12px; /* Отступ от чекбокса */
+}
+
+/* Выпадающие списки */
+.ant-select-dropdown {
+  background: #1f1f1f !important; /* Темный фон выпадающего списка */
+  border: 1px solid #404040;
+}
+
+.ant-select-item {
+  color: #fff !important; /* Белый текст в списке */
+}
+
+.ant-select-item-option-selected {
+  background: #6234ef !important; /* Фиолетовый фон выбранного элемента */
+}
+
+.ant-select-item-option-active {
+  background: rgba(255, 255, 255, 0.1) !important; /* Подсветка при наведении */
+}
+
+/* Подтверждающие попапы (удаление) */
+.ant-popconfirm .ant-popover-inner {
+  background: #1f1f1f; /* Темный фон */
+  border: 1px solid #404040;
+}
+
+.ant-popconfirm .ant-popover-title {
+  color: #fff;
+  border-bottom: 1px solid #303030; /* Разделительная линия */
+}
+
+.ant-popconfirm .ant-popover-inner-content {
+  color: #fff;
+}
+
+/* Календарь выбора даты */
+.ant-picker-panel {
+  background: #1f1f1f !important;
+  border: 1px solid #404040 !important;
+}
+
+.ant-picker-header button {
+  color: #fff !important; /* Белые кнопки в календаре */
+}
+
+.ant-picker-content th {
+  color: rgba(
+    255,
+    255,
+    255,
+    0.6
+  ) !important; /* Полупрозрачные заголовки дней */
+}
+
+.ant-picker-cell {
+  color: #fff !important; /* Белые числа */
+}
+
+.ant-picker-cell-in-view {
+  color: #fff !important;
+}
+
+.ant-picker-cell-disabled {
+  color: rgba(
+    255,
+    255,
+    255,
+    0.3
+  ) !important; /* Более прозрачные недоступные даты */
+}
+
+.ant-picker-today-btn {
+  color: #6234ef !important; /* Фиолетовая кнопка "Сегодня" */
+}
+
+/* Отключенные кнопки */
+.ant-btn-primary:disabled {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: #404040 !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* ===== АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ ===== */
 @media (max-width: 768px) {
+  .incoming-content {
+    padding: 16px; /* Меньшие отступы */
+  }
+
+  .incoming-header {
+    flex-direction: column; /* Заголовок и кнопки в колонку */
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .incoming-actions {
+    width: 100%;
+    justify-content: flex-start; /* Кнопки выравниваем по левому краю */
+  }
+
   .task-meta {
-    flex-direction: column;
+    flex-direction: column; /* Теги и даты в колонку */
     gap: 8px;
   }
 
   .task-dates {
-    flex-direction: row;
+    flex-direction: row; /* Даты в строку на мобильных */
     gap: 12px;
+  }
+
+  .creating-task-content .ant-space-item {
+    width: 100%; /* Полная ширина для элементов формы */
+  }
+
+  .creating-task-input,
+  .editing-task-input {
+    width: 100%;
+  }
+
+  .priority-select,
+  .complexity-select {
+    width: 100px; /* Уже выпадающие списки */
+  }
+
+  .due-date-picker {
+    width: 120px; /* Уже выбор даты */
+  }
+}
+
+/* ===== АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ ===== */
+@media (max-width: 480px) {
+  .incoming-content {
+    padding: 12px; /* Еще меньшие отступы */
+  }
+
+  .incoming-actions {
+    flex-direction: column; /* Кнопки в колонку */
+    gap: 8px;
+    width: 100%;
+  }
+
+  .incoming-actions .ant-btn {
+    width: 100%; /* Полная ширина кнопок */
+    justify-content: center; /* Центрируем текст */
+  }
+
+  .task-dates {
+    flex-direction: column; /* Даты снова в колонку на очень маленьких экранах */
+    gap: 4px;
+  }
+
+  .creating-task-card .ant-card-body {
+    padding: 12px; /* Меньшие отступы в карточке */
   }
 }

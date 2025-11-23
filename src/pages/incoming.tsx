@@ -39,8 +39,8 @@ interface Task {
   completed: boolean;
   priority: "Срочно" | "Высокий" | "Средний" | "Низкий";
   complexity: "Высокая" | "Средняя" | "Низкая";
-  createdAt: string; // Дата создания
-  dueDate?: string; // Дедлайн (опционально)
+  createdAt: string;
+  dueDate?: string;
 }
 
 type HistoryAction =
@@ -389,245 +389,240 @@ const Incoming: React.FC = () => {
   const activeTasksCount = tasks.filter((t) => !t.completed).length;
 
   return (
-    <div className="incoming-page">
-      <Card className="incoming-card">
-        {/* Header */}
-        <div className="incoming-header">
-          <div className="incoming-title-section">
-            <Title level={2} className="incoming-title">
-              Входящие
-            </Title>
-            <TaskCounter count={activeTasksCount} />
-          </div>
-
-          <Space className="incoming-actions">
-            <Button icon={<FilterOutlined />} className="filter-btn">
-              Фильтр
-            </Button>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => setCreatingTask(true)}
-              className="new-task-btn"
-            >
-              Новая задача
-            </Button>
-            <Button
-              icon={<UndoOutlined />}
-              onClick={undo}
-              disabled={historyIndex < 0}
-              className="undo-btn"
-            >
-              Отменить
-            </Button>
-          </Space>
+    <div className="incoming-content">
+      {/* Header */}
+      <div className="incoming-header">
+        <div className="incoming-title-section">
+          <Title level={2} className="incoming-title">
+            Входящие
+          </Title>
+          <TaskCounter count={activeTasksCount} />
         </div>
 
-        <Divider className="incoming-divider" />
+        <Space className="incoming-actions">
+          <Button icon={<FilterOutlined />} className="filter-btn">
+            Фильтр
+          </Button>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => setCreatingTask(true)}
+            className="new-task-btn"
+          >
+            Новая задача
+          </Button>
+          <Button
+            icon={<UndoOutlined />}
+            onClick={undo}
+            disabled={historyIndex < 0}
+            className="undo-btn"
+          >
+            Отменить
+          </Button>
+        </Space>
+      </div>
 
-        {/* Creating Task */}
-        {creatingTask && (
-          <Card className="creating-task-card">
-            <Space className="creating-task-content" direction="vertical">
-              <Input
-                placeholder="Введите название задачи..."
-                value={newTaskText}
-                onChange={(e) => setNewTaskText(e.target.value)}
-                onPressEnter={createTask}
-                onKeyDown={(e) => e.key === "Escape" && setCreatingTask(false)}
-                autoFocus
-                className="creating-task-input"
+      <Divider className="incoming-divider" />
+
+      {/* Creating Task */}
+      {creatingTask && (
+        <Card className="creating-task-card">
+          <Space className="creating-task-content" direction="vertical">
+            <Input
+              placeholder="Введите название задачи..."
+              value={newTaskText}
+              onChange={(e) => setNewTaskText(e.target.value)}
+              onPressEnter={createTask}
+              onKeyDown={(e) => e.key === "Escape" && setCreatingTask(false)}
+              autoFocus
+              className="creating-task-input"
+            />
+            <Space wrap>
+              <Select
+                value={newTaskPriority}
+                onChange={setNewTaskPriority}
+                className="priority-select"
+              >
+                <Option value="Срочно">Срочно</Option>
+                <Option value="Высокий">Высокий</Option>
+                <Option value="Средний">Средний</Option>
+                <Option value="Низкий">Низкий</Option>
+              </Select>
+              <Select
+                value={newTaskComplexity}
+                onChange={setNewTaskComplexity}
+                className="complexity-select"
+              >
+                <Option value="Высокая">Высокая</Option>
+                <Option value="Средняя">Средняя</Option>
+                <Option value="Низкая">Низкая</Option>
+              </Select>
+              <DatePicker
+                placeholder="Дедлайн"
+                value={newTaskDueDate}
+                onChange={setNewTaskDueDate}
+                className="due-date-picker"
+                format="DD.MM.YYYY"
               />
-              <Space wrap>
-                <Select
-                  value={newTaskPriority}
-                  onChange={setNewTaskPriority}
-                  className="priority-select"
-                >
-                  <Option value="Срочно">Срочно</Option>
-                  <Option value="Высокий">Высокий</Option>
-                  <Option value="Средний">Средний</Option>
-                  <Option value="Низкий">Низкий</Option>
-                </Select>
-                <Select
-                  value={newTaskComplexity}
-                  onChange={setNewTaskComplexity}
-                  className="complexity-select"
-                >
-                  <Option value="Высокая">Высокая</Option>
-                  <Option value="Средняя">Средняя</Option>
-                  <Option value="Низкая">Низкая</Option>
-                </Select>
-                <DatePicker
-                  placeholder="Дедлайн"
-                  value={newTaskDueDate}
-                  onChange={setNewTaskDueDate}
-                  className="due-date-picker"
-                  format="DD.MM.YYYY"
-                />
-                <Button
-                  type="primary"
-                  onClick={createTask}
-                  icon={<SaveOutlined />}
-                >
-                  Сохранить
-                </Button>
-                <Button
-                  onClick={() => setCreatingTask(false)}
-                  icon={<CloseOutlined />}
-                >
-                  Отмена
-                </Button>
-              </Space>
+              <Button
+                type="primary"
+                onClick={createTask}
+                icon={<SaveOutlined />}
+              >
+                Сохранить
+              </Button>
+              <Button
+                onClick={() => setCreatingTask(false)}
+                icon={<CloseOutlined />}
+              >
+                Отмена
+              </Button>
             </Space>
-          </Card>
-        )}
+          </Space>
+        </Card>
+      )}
 
-        {/* Tasks List */}
-        <List
-          locale={{
-            emptyText: (
-              <Empty
-                description="Пока задач нет"
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-              />
-            ),
-          }}
-          dataSource={tasks}
-          renderItem={(task) => (
-            <List.Item
-              className={`task-item ${
-                selectedTaskId === task.id ? "task-item-selected" : ""
-              }`}
-              onClick={() =>
-                setSelectedTaskId(task.id === selectedTaskId ? null : task.id)
+      {/* Tasks List */}
+      <List
+        locale={{
+          emptyText: (
+            <Empty
+              description="Пока задач нет"
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+            />
+          ),
+        }}
+        dataSource={tasks}
+        renderItem={(task) => (
+          <List.Item
+            className={`task-item ${
+              selectedTaskId === task.id ? "task-item-selected" : ""
+            }`}
+            onClick={() =>
+              setSelectedTaskId(task.id === selectedTaskId ? null : task.id)
+            }
+            onDoubleClick={() => handleDoubleClick(task)}
+            actions={[
+              <EditOutlined
+                key="edit"
+                onClick={() => handleDoubleClick(task)}
+                className="edit-icon"
+              />,
+              <Popconfirm
+                title="Удалить задачу?"
+                onConfirm={() => deleteTask(task.id)}
+                okText="Да"
+                cancelText="Нет"
+              >
+                <DeleteOutlined key="delete" className="delete-icon" />
+              </Popconfirm>,
+            ]}
+          >
+            <List.Item.Meta
+              avatar={
+                <Checkbox
+                  checked={task.completed}
+                  onChange={() => toggleTaskCompletion(task.id)}
+                  className="task-checkbox"
+                />
               }
-              onDoubleClick={() => handleDoubleClick(task)}
-              actions={[
-                <EditOutlined
-                  key="edit"
-                  onClick={() => handleDoubleClick(task)}
-                  className="edit-icon"
-                />,
-                <Popconfirm
-                  title="Удалить задачу?"
-                  onConfirm={() => deleteTask(task.id)}
-                  okText="Да"
-                  cancelText="Нет"
-                >
-                  <DeleteOutlined key="delete" className="delete-icon" />
-                </Popconfirm>,
-              ]}
-            >
-              <List.Item.Meta
-                avatar={
-                  <Checkbox
-                    checked={task.completed}
-                    onChange={() => toggleTaskCompletion(task.id)}
-                    className="task-checkbox"
-                  />
-                }
-                title={
-                  editingTaskId === task.id ? (
-                    <Space
-                      direction="vertical"
-                      className="editing-task-content"
-                    >
-                      <Input
-                        value={editingText}
-                        onChange={(e) => setEditingText(e.target.value)}
-                        onPressEnter={() => saveEditing(task.id)}
-                        onKeyDown={(e) =>
-                          e.key === "Escape" && setEditingTaskId(null)
-                        }
-                        onBlur={() => saveEditing(task.id)}
-                        autoFocus
-                        className="editing-task-input"
-                      />
-                      <Space wrap>
-                        <Select
-                          value={editingPriority}
-                          onChange={setEditingPriority}
-                          className="priority-select"
-                        >
-                          <Option value="Срочно">Срочно</Option>
-                          <Option value="Высокий">Высокий</Option>
-                          <Option value="Средний">Средний</Option>
-                          <Option value="Низкий">Низкий</Option>
-                        </Select>
-                        <Select
-                          value={editingComplexity}
-                          onChange={setEditingComplexity}
-                          className="complexity-select"
-                        >
-                          <Option value="Высокая">Высокая</Option>
-                          <Option value="Средняя">Средняя</Option>
-                          <Option value="Низкая">Низкая</Option>
-                        </Select>
-                        <DatePicker
-                          placeholder="Дедлайн"
-                          value={editingDueDate}
-                          onChange={setEditingDueDate}
-                          className="due-date-picker"
-                          format="DD.MM.YYYY"
-                        />
-                        <Button
-                          type="primary"
-                          size="small"
-                          onClick={() => saveEditing(task.id)}
-                          icon={<SaveOutlined />}
-                        >
-                          Сохранить
-                        </Button>
-                      </Space>
-                    </Space>
-                  ) : (
-                    <div className="task-content">
-                      <span
-                        className={`task-text ${
-                          task.completed ? "task-text-completed" : ""
-                        }`}
+              title={
+                editingTaskId === task.id ? (
+                  <Space direction="vertical" className="editing-task-content">
+                    <Input
+                      value={editingText}
+                      onChange={(e) => setEditingText(e.target.value)}
+                      onPressEnter={() => saveEditing(task.id)}
+                      onKeyDown={(e) =>
+                        e.key === "Escape" && setEditingTaskId(null)
+                      }
+                      onBlur={() => saveEditing(task.id)}
+                      autoFocus
+                      className="editing-task-input"
+                    />
+                    <Space wrap>
+                      <Select
+                        value={editingPriority}
+                        onChange={setEditingPriority}
+                        className="priority-select"
                       >
-                        {task.text}
-                      </span>
-                      <div className="task-meta">
-                        <div className="task-tags">
-                          <Tag
-                            color={getPriorityColor(task.priority)}
-                            className="priority-tag"
+                        <Option value="Срочно">Срочно</Option>
+                        <Option value="Высокий">Высокий</Option>
+                        <Option value="Средний">Средний</Option>
+                        <Option value="Низкий">Низкий</Option>
+                      </Select>
+                      <Select
+                        value={editingComplexity}
+                        onChange={setEditingComplexity}
+                        className="complexity-select"
+                      >
+                        <Option value="Высокая">Высокая</Option>
+                        <Option value="Средняя">Средняя</Option>
+                        <Option value="Низкая">Низкая</Option>
+                      </Select>
+                      <DatePicker
+                        placeholder="Дедлайн"
+                        value={editingDueDate}
+                        onChange={setEditingDueDate}
+                        className="due-date-picker"
+                        format="DD.MM.YYYY"
+                      />
+                      <Button
+                        type="primary"
+                        size="small"
+                        onClick={() => saveEditing(task.id)}
+                        icon={<SaveOutlined />}
+                      >
+                        Сохранить
+                      </Button>
+                    </Space>
+                  </Space>
+                ) : (
+                  <div className="task-content">
+                    <span
+                      className={`task-text ${
+                        task.completed ? "task-text-completed" : ""
+                      }`}
+                    >
+                      {task.text}
+                    </span>
+                    <div className="task-meta">
+                      <div className="task-tags">
+                        <Tag
+                          color={getPriorityColor(task.priority)}
+                          className="priority-tag"
+                        >
+                          {task.priority}
+                        </Tag>
+                        <Tag
+                          color={getComplexityColor(task.complexity)}
+                          className="complexity-tag"
+                        >
+                          {task.complexity}
+                        </Tag>
+                      </div>
+                      <div className="task-dates">
+                        <span className="created-date">
+                          <CalendarOutlined /> {formatDate(task.createdAt)}
+                        </span>
+                        {task.dueDate && (
+                          <span
+                            className={`due-date due-date-${getDueDateStatus(
+                              task.dueDate
+                            )}`}
                           >
-                            {task.priority}
-                          </Tag>
-                          <Tag
-                            color={getComplexityColor(task.complexity)}
-                            className="complexity-tag"
-                          >
-                            {task.complexity}
-                          </Tag>
-                        </div>
-                        <div className="task-dates">
-                          <span className="created-date">
-                            <CalendarOutlined /> {formatDate(task.createdAt)}
+                            <ClockCircleOutlined /> {formatDate(task.dueDate)}
                           </span>
-                          {task.dueDate && (
-                            <span
-                              className={`due-date due-date-${getDueDateStatus(
-                                task.dueDate
-                              )}`}
-                            >
-                              <ClockCircleOutlined /> {formatDate(task.dueDate)}
-                            </span>
-                          )}
-                        </div>
+                        )}
                       </div>
                     </div>
-                  )
-                }
-              />
-            </List.Item>
-          )}
-        />
-      </Card>
+                  </div>
+                )
+              }
+            />
+          </List.Item>
+        )}
+      />
     </div>
   );
 };
