@@ -37,22 +37,30 @@
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .filter-btn:hover {
-  background: #6234ef;
-  border-color: #6234ef;
-  color: #fff;
+  background: #6234ef !important;
+  border-color: #6234ef !important;
+  color: #fff !important;
 }
 
 .new-task-btn {
   background: #6234ef;
   border-color: #6234ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .new-task-btn:hover {
-  background: #5429d4;
-  border-color: #5429d4;
+  background: #5429d4 !important;
+  border-color: #5429d4 !important;
 }
 
 /* ===== РАЗДЕЛИТЕЛЬНАЯ ЛИНИЯ ===== */
@@ -61,11 +69,12 @@
   margin: 16px 0;
 }
 
-/* ===== КАРТОЧКА СОЗДАНИЯ НОВОЙ ЗАДАЧИ ===== */
+/* ===== СОЗДАНИЕ ЗАДАЧИ ПО ДИЗАЙНУ ===== */
 .creating-task-card {
   background: #262626;
   border: 1px solid #404040;
   margin-bottom: 8px;
+  border-radius: 8px;
 }
 
 .creating-task-card .ant-card-body {
@@ -76,17 +85,126 @@
   width: 100%;
 }
 
-/* ===== ПОЛЯ ВВОДА ===== */
-.creating-task-input,
-.editing-task-input {
-  background: #1f1f1f;
-  border-color: #404040;
-  color: #fff;
+.creating-task-header {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  margin-bottom: 12px;
 }
 
-.creating-task-input::placeholder,
-.editing-task-input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+.creating-task-checkbox .ant-checkbox-inner {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  width: 18px;
+  height: 18px;
+}
+
+.creating-task-input {
+  background: transparent !important;
+  border: none !important;
+  color: #fff !important;
+  font-size: 16px;
+  padding: 0 !important;
+  box-shadow: none !important;
+  flex: 1;
+}
+
+.creating-task-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.creating-task-input:focus {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.creating-task-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.creating-task-tags {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Стили для кнопок с иконками */
+.creating-task-icon-btn {
+  color: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid #404040 !important;
+  background: transparent !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.creating-task-icon-btn.has-value {
+  color: #fff !important;
+  border-color: #6234ef !important;
+}
+
+.creating-task-icon-btn:hover {
+  background: #6234ef !important;
+  border-color: #6234ef !important;
+  color: #fff !important;
+}
+
+/* КАСТОМНЫЕ СТИЛИ ДЛЯ DATEPICKER */
+.custom-task-datepicker .ant-picker {
+  background: transparent !important;
+  border: 1px solid #404040 !important;
+  border-radius: 6px !important;
+}
+
+.custom-task-datepicker .ant-picker-input input {
+  color: #fff !important;
+  background: transparent !important;
+}
+
+.custom-task-datepicker .ant-picker-input input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.custom-task-datepicker .ant-picker-suffix {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Ховер для DatePicker */
+.custom-task-datepicker .ant-picker:hover {
+  background: #6234ef !important;
+  border-color: #6234ef !important;
+}
+
+.custom-task-datepicker .ant-picker:hover .ant-picker-input input {
+  color: #fff !important;
+}
+
+.custom-task-datepicker .ant-picker:hover .ant-picker-suffix {
+  color: #fff !important;
+}
+
+/* Фокус для DatePicker */
+.custom-task-datepicker .ant-picker.ant-picker-focused {
+  border-color: #6234ef !important;
+  box-shadow: 0 0 0 2px rgba(98, 52, 239, 0.2) !important;
+}
+
+/* Выпадающие меню */
+.ant-dropdown-menu {
+  background: #1f1f1f !important;
+  border: 1px solid #404040 !important;
+}
+
+.ant-dropdown-menu-item {
+  color: #fff !important;
+}
+
+.ant-dropdown-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* ===== ЭЛЕМЕНТЫ СПИСКА ЗАДАЧ ===== */
@@ -156,6 +274,9 @@
 .complexity-tag {
   border: none;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* ===== ВЫПАДАЮЩИЕ СПИСКИ ===== */
@@ -200,19 +321,6 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* ===== ВЫБОР ДАТЫ (ДЕДЛАЙН) ===== */
-.due-date-picker {
-  width: 140px;
-}
-
-.due-date-picker .ant-picker-input > input {
-  color: #fff;
-}
-
-.due-date-picker .ant-picker-suffix {
-  color: rgba(255, 255, 255, 0.5);
-}
-
 /* ===== БЛОК С ДАТАМИ ===== */
 .task-dates {
   display: flex;
@@ -222,30 +330,10 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
-.created-date,
-.due-date {
+.task-date {
   display: flex;
   align-items: center;
   gap: 4px;
-}
-
-/* ===== ЦВЕТА ДЛЯ СРОКОВ ВЫПОЛНЕНИЯ ===== */
-.due-date-overdue {
-  color: #ff4d4f !important;
-  font-weight: 500;
-}
-
-.due-date-urgent {
-  color: #fa8c16 !important;
-  font-weight: 500;
-}
-
-.due-date-soon {
-  color: #faad14 !important;
-}
-
-.due-date-normal {
-  color: #52c41a !important;
 }
 
 /* ===== ПЕРЕОПРЕДЕЛЕНИЯ СТИЛЕЙ ANT DESIGN ===== */
@@ -377,7 +465,7 @@
     width: 100px;
   }
 
-  .due-date-picker {
+  .custom-task-datepicker {
     width: 120px;
   }
 }

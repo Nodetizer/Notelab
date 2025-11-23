@@ -14,16 +14,16 @@ import {
   Popconfirm,
   Divider,
   DatePicker,
+  Dropdown,
 } from "antd";
 import {
   FilterOutlined,
   PlusOutlined,
   DeleteOutlined,
   EditOutlined,
-  SaveOutlined,
-  CloseOutlined,
   CalendarOutlined,
-  ClockCircleOutlined,
+  FlagOutlined,
+  BarChartOutlined,
 } from "@ant-design/icons";
 import TaskCounter from "../components/Pages/taskCounter";
 import "./incoming.css";
@@ -36,10 +36,9 @@ interface Task {
   id: number;
   text: string;
   completed: boolean;
-  priority: "Срочно" | "Высокий" | "Средний" | "Низкий";
-  complexity: "Высокая" | "Средняя" | "Низкая";
-  createdAt: string;
-  dueDate?: string;
+  priority?: "Срочно" | "Высокий" | "Средний" | "Низкий";
+  complexity?: "Высокая" | "Средняя" | "Низкая";
+  taskDate?: string;
 }
 
 type HistoryAction =
@@ -55,20 +54,20 @@ type HistoryAction =
   | {
       type: "PRIORITY";
       taskId: number;
-      oldPriority: Task["priority"];
-      newPriority: Task["priority"];
+      oldPriority?: Task["priority"];
+      newPriority?: Task["priority"];
     }
   | {
       type: "COMPLEXITY";
       taskId: number;
-      oldComplexity: Task["complexity"];
-      newComplexity: Task["complexity"];
+      oldComplexity?: Task["complexity"];
+      newComplexity?: Task["complexity"];
     }
   | {
-      type: "DUEDATE";
+      type: "TASKDATE";
       taskId: number;
-      oldDueDate?: string;
-      newDueDate?: string;
+      oldTaskDate?: string;
+      newTaskDate?: string;
     };
 
 const Incoming: React.FC = () => {
@@ -81,15 +80,13 @@ const Incoming: React.FC = () => {
         completed: boolean;
         priority?: string;
         complexity?: string;
-        createdAt?: string;
-        dueDate?: string;
+        taskDate?: string;
       }> = JSON.parse(savedTasks);
       return parsedTasks.map((task) => ({
         ...task,
-        priority: (task.priority as Task["priority"]) || "Средний",
-        complexity: (task.complexity as Task["complexity"]) || "Средняя",
-        createdAt: task.createdAt || new Date().toISOString(),
-        dueDate: task.dueDate,
+        priority: task.priority as Task["priority"],
+        complexity: task.complexity as Task["complexity"],
+        taskDate: task.taskDate,
       }));
     }
     return [];
@@ -97,21 +94,17 @@ const Incoming: React.FC = () => {
 
   const [creatingTask, setCreatingTask] = useState(false);
   const [newTaskText, setNewTaskText] = useState("");
-  const [newTaskPriority, setNewTaskPriority] =
-    useState<Task["priority"]>("Средний");
+  const [newTaskPriority, setNewTaskPriority] = useState<Task["priority"]>();
   const [newTaskComplexity, setNewTaskComplexity] =
-    useState<Task["complexity"]>("Средняя");
-  const [newTaskDueDate, setNewTaskDueDate] = useState<dayjs.Dayjs | null>(
-    null
-  );
+    useState<Task["complexity"]>();
+  const [newTaskDate, setNewTaskDate] = useState<dayjs.Dayjs | null>(null);
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
   const [editingText, setEditingText] = useState("");
-  const [editingPriority, setEditingPriority] =
-    useState<Task["priority"]>("Средний");
+  const [editingPriority, setEditingPriority] = useState<Task["priority"]>();
   const [editingComplexity, setEditingComplexity] =
-    useState<Task["complexity"]>("Средняя");
-  const [editingDueDate, setEditingDueDate] = useState<dayjs.Dayjs | null>(
+    useState<Task["complexity"]>();
+  const [editingTaskDate, setEditingTaskDate] = useState<dayjs.Dayjs | null>(
     null
   );
 
@@ -180,11 +173,11 @@ const Incoming: React.FC = () => {
             )
           );
           break;
-        case "DUEDATE":
+        case "TASKDATE":
           setTasks((prev) =>
             prev.map((task) =>
               task.id === action.taskId
-                ? { ...task, dueDate: action.oldDueDate }
+                ? { ...task, taskDate: action.oldTaskDate }
                 : task
             )
           );
@@ -222,16 +215,15 @@ const Incoming: React.FC = () => {
       completed: false,
       priority: newTaskPriority,
       complexity: newTaskComplexity,
-      createdAt: new Date().toISOString(),
-      dueDate: newTaskDueDate ? newTaskDueDate.toISOString() : undefined,
+      taskDate: newTaskDate ? newTaskDate.toISOString() : undefined,
     };
 
     pushToHistory({ type: "CREATE", task: newTask });
     setTasks((prev) => [...prev, newTask]);
     setNewTaskText("");
-    setNewTaskPriority("Средний");
-    setNewTaskComplexity("Средняя");
-    setNewTaskDueDate(null);
+    setNewTaskPriority(undefined);
+    setNewTaskComplexity(undefined);
+    setNewTaskDate(null);
     setCreatingTask(false);
     message.success("Задача добавлена");
   };
@@ -259,7 +251,7 @@ const Incoming: React.FC = () => {
     setEditingText(task.text);
     setEditingPriority(task.priority);
     setEditingComplexity(task.complexity);
-    setEditingDueDate(task.dueDate ? dayjs(task.dueDate) : null);
+    setEditingTaskDate(task.taskDate ? dayjs(task.taskDate) : null);
   };
 
   const saveEditing = (id: number) => {
@@ -298,15 +290,15 @@ const Incoming: React.FC = () => {
       });
     }
 
-    const newDueDate = editingDueDate
-      ? editingDueDate.toISOString()
+    const newTaskDate = editingTaskDate
+      ? editingTaskDate.toISOString()
       : undefined;
-    if (task.dueDate !== newDueDate) {
+    if (task.taskDate !== newTaskDate) {
       pushToHistory({
-        type: "DUEDATE",
+        type: "TASKDATE",
         taskId: id,
-        oldDueDate: task.dueDate,
-        newDueDate: newDueDate,
+        oldTaskDate: task.taskDate,
+        newTaskDate: newTaskDate,
       });
     }
 
@@ -318,7 +310,7 @@ const Incoming: React.FC = () => {
               text: editingText.trim(),
               priority: editingPriority,
               complexity: editingComplexity,
-              dueDate: newDueDate,
+              taskDate: newTaskDate,
             }
           : task
       )
@@ -340,7 +332,7 @@ const Incoming: React.FC = () => {
     message.success("Задача удалена");
   };
 
-  const getPriorityColor = (priority: Task["priority"]) => {
+  const getPriorityColor = (priority?: Task["priority"]) => {
     switch (priority) {
       case "Срочно":
         return "red";
@@ -355,7 +347,7 @@ const Incoming: React.FC = () => {
     }
   };
 
-  const getComplexityColor = (complexity: Task["complexity"]) => {
+  const getComplexityColor = (complexity?: Task["complexity"]) => {
     switch (complexity) {
       case "Высокая":
         return "volcano";
@@ -368,24 +360,68 @@ const Incoming: React.FC = () => {
     }
   };
 
-  const getDueDateStatus = (dueDate?: string) => {
-    if (!dueDate) return null;
-
-    const now = dayjs();
-    const due = dayjs(dueDate);
-    const diffDays = due.diff(now, "day");
-
-    if (due.isBefore(now, "day")) return "overdue";
-    if (diffDays <= 1) return "urgent";
-    if (diffDays <= 3) return "soon";
-    return "normal";
-  };
-
   const formatDate = (dateString: string) => {
     return dayjs(dateString).format("DD.MM.YYYY");
   };
 
   const activeTasksCount = tasks.filter((t) => !t.completed).length;
+
+  // Dropdown меню для приоритета
+  const priorityMenu = {
+    items: [
+      {
+        key: "1",
+        label: "Срочно",
+        onClick: () => setNewTaskPriority("Срочно"),
+      },
+      {
+        key: "2",
+        label: "Высокий",
+        onClick: () => setNewTaskPriority("Высокий"),
+      },
+      {
+        key: "3",
+        label: "Средний",
+        onClick: () => setNewTaskPriority("Средний"),
+      },
+      {
+        key: "4",
+        label: "Низкий",
+        onClick: () => setNewTaskPriority("Низкий"),
+      },
+      {
+        key: "5",
+        label: "Убрать приоритет",
+        onClick: () => setNewTaskPriority(undefined),
+      },
+    ],
+  };
+
+  // Dropdown меню для сложности
+  const complexityMenu = {
+    items: [
+      {
+        key: "1",
+        label: "Высокая",
+        onClick: () => setNewTaskComplexity("Высокая"),
+      },
+      {
+        key: "2",
+        label: "Средняя",
+        onClick: () => setNewTaskComplexity("Средняя"),
+      },
+      {
+        key: "3",
+        label: "Низкая",
+        onClick: () => setNewTaskComplexity("Низкая"),
+      },
+      {
+        key: "4",
+        label: "Убрать сложность",
+        onClick: () => setNewTaskComplexity(undefined),
+      },
+    ],
+  };
 
   return (
     <div className="incoming-content">
@@ -418,58 +454,56 @@ const Incoming: React.FC = () => {
       {/* Creating Task */}
       {creatingTask && (
         <Card className="creating-task-card">
-          <Space className="creating-task-content" direction="vertical">
-            <Input
-              placeholder="Введите название задачи..."
-              value={newTaskText}
-              onChange={(e) => setNewTaskText(e.target.value)}
-              onPressEnter={createTask}
-              onKeyDown={(e) => e.key === "Escape" && setCreatingTask(false)}
-              autoFocus
-              className="creating-task-input"
-            />
-            <Space wrap>
-              <Select
-                value={newTaskPriority}
-                onChange={setNewTaskPriority}
-                className="priority-select"
-              >
-                <Option value="Срочно">Срочно</Option>
-                <Option value="Высокий">Высокий</Option>
-                <Option value="Средний">Средний</Option>
-                <Option value="Низкий">Низкий</Option>
-              </Select>
-              <Select
-                value={newTaskComplexity}
-                onChange={setNewTaskComplexity}
-                className="complexity-select"
-              >
-                <Option value="Высокая">Высокая</Option>
-                <Option value="Средняя">Средняя</Option>
-                <Option value="Низкая">Низкая</Option>
-              </Select>
-              <DatePicker
-                placeholder="Дедлайн"
-                value={newTaskDueDate}
-                onChange={setNewTaskDueDate}
-                className="due-date-picker"
-                format="DD.MM.YYYY"
+          <div className="creating-task-content">
+            <div className="creating-task-header">
+              <Checkbox className="creating-task-checkbox" />
+              <Input
+                placeholder="Введите название задачи"
+                value={newTaskText}
+                onChange={(e) => setNewTaskText(e.target.value)}
+                onPressEnter={createTask}
+                onKeyDown={(e) => e.key === "Escape" && setCreatingTask(false)}
+                autoFocus
+                className="creating-task-input"
               />
-              <Button
-                type="primary"
-                onClick={createTask}
-                icon={<SaveOutlined />}
-              >
-                Сохранить
-              </Button>
-              <Button
-                onClick={() => setCreatingTask(false)}
-                icon={<CloseOutlined />}
-              >
-                Отмена
-              </Button>
-            </Space>
-          </Space>
+            </div>
+            <div className="creating-task-meta">
+              <div className="creating-task-tags">
+                <Dropdown menu={priorityMenu} trigger={["click"]}>
+                  <Button
+                    type="text"
+                    icon={<FlagOutlined />}
+                    className={`creating-task-icon-btn ${
+                      newTaskPriority ? "has-value" : ""
+                    }`}
+                  >
+                    {newTaskPriority || "Приоритет"}
+                  </Button>
+                </Dropdown>
+
+                <Dropdown menu={complexityMenu} trigger={["click"]}>
+                  <Button
+                    type="text"
+                    icon={<BarChartOutlined />}
+                    className={`creating-task-icon-btn ${
+                      newTaskComplexity ? "has-value" : ""
+                    }`}
+                  >
+                    {newTaskComplexity || "Сложность"}
+                  </Button>
+                </Dropdown>
+
+                <DatePicker
+                  placeholder="Дата задачи"
+                  value={newTaskDate}
+                  onChange={setNewTaskDate}
+                  className="custom-task-datepicker"
+                  format="DD.MM.YYYY"
+                  suffixIcon={<CalendarOutlined />}
+                />
+              </div>
+            </div>
+          </div>
         </Card>
       )}
 
@@ -536,7 +570,9 @@ const Incoming: React.FC = () => {
                         value={editingPriority}
                         onChange={setEditingPriority}
                         className="priority-select"
+                        placeholder="Приоритет"
                       >
+                        <Option value={undefined}>Без приоритета</Option>
                         <Option value="Срочно">Срочно</Option>
                         <Option value="Высокий">Высокий</Option>
                         <Option value="Средний">Средний</Option>
@@ -546,26 +582,20 @@ const Incoming: React.FC = () => {
                         value={editingComplexity}
                         onChange={setEditingComplexity}
                         className="complexity-select"
+                        placeholder="Сложность"
                       >
+                        <Option value={undefined}>Без сложности</Option>
                         <Option value="Высокая">Высокая</Option>
                         <Option value="Средняя">Средняя</Option>
                         <Option value="Низкая">Низкая</Option>
                       </Select>
                       <DatePicker
-                        placeholder="Дедлайн"
-                        value={editingDueDate}
-                        onChange={setEditingDueDate}
-                        className="due-date-picker"
+                        placeholder="Дата задачи"
+                        value={editingTaskDate}
+                        onChange={setEditingTaskDate}
+                        className="custom-task-datepicker"
                         format="DD.MM.YYYY"
                       />
-                      <Button
-                        type="primary"
-                        size="small"
-                        onClick={() => saveEditing(task.id)}
-                        icon={<SaveOutlined />}
-                      >
-                        Сохранить
-                      </Button>
                     </Space>
                   </Space>
                 ) : (
@@ -579,30 +609,27 @@ const Incoming: React.FC = () => {
                     </span>
                     <div className="task-meta">
                       <div className="task-tags">
-                        <Tag
-                          color={getPriorityColor(task.priority)}
-                          className="priority-tag"
-                        >
-                          {task.priority}
-                        </Tag>
-                        <Tag
-                          color={getComplexityColor(task.complexity)}
-                          className="complexity-tag"
-                        >
-                          {task.complexity}
-                        </Tag>
+                        {task.priority && (
+                          <Tag
+                            color={getPriorityColor(task.priority)}
+                            className="priority-tag"
+                          >
+                            <FlagOutlined /> {task.priority}
+                          </Tag>
+                        )}
+                        {task.complexity && (
+                          <Tag
+                            color={getComplexityColor(task.complexity)}
+                            className="complexity-tag"
+                          >
+                            <BarChartOutlined /> {task.complexity}
+                          </Tag>
+                        )}
                       </div>
                       <div className="task-dates">
-                        <span className="created-date">
-                          <CalendarOutlined /> {formatDate(task.createdAt)}
-                        </span>
-                        {task.dueDate && (
-                          <span
-                            className={`due-date due-date-${getDueDateStatus(
-                              task.dueDate
-                            )}`}
-                          >
-                            <ClockCircleOutlined /> {formatDate(task.dueDate)}
+                        {task.taskDate && (
+                          <span className="task-date">
+                            <CalendarOutlined /> {formatDate(task.taskDate)}
                           </span>
                         )}
                       </div>
