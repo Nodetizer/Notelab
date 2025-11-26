@@ -1,25 +1,23 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Sidebar from "./sidebar/sidebar";
-import PageContent from "./components/Pages/pageContent";
-import Incoming from "./pages/incoming";
-import Incoming_test from "./pages/today";
+import Sidebar from "./sidebar/Sidebar";
+import PageContent from "./components/Layout/PageContent";
+import Incoming from "./pages/Incoming/Incoming";
+import Today from "./pages/today"; // Переименовал
 import "./sidebar/sidebar.css";
+import "./App.css"; // Добавим стили
 
 const App: React.FC = () => {
   return (
     <Router>
-      <div style={{ display: "flex" }}>
+      <div className="app-layout">
         <Sidebar />
         <PageContent>
           <Routes>
-            <Route path="/" element={null} />
+            <Route path="/" element={<div>Главная страница</div>} />
             <Route path="/incoming" element={<Incoming />} />
-          </Routes>
-
-          <Routes>
-            <Route path="/" element={null} />
-            <Route path="/incoming_test" element={<Incoming_test />} />
+            <Route path="/today" element={<Today />} />
+            {/* Добавь другие роуты здесь */}
           </Routes>
         </PageContent>
       </div>

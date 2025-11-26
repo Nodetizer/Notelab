@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./today.css";
-import TaskCounter from "../components/Pages/taskCounter";
-import AddTaskButton from "../components/Pages/AddTaskButton";
+import TaskCounter from "../components/UI/TaskCounter/TaskCounter";
+import AddTaskButton from "../components/UI/AddTaskButton";
 
 export interface Task {
   id: number;

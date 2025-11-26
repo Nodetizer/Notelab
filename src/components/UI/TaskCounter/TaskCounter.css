@@ -1,0 +1,14 @@
+.task-counter {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.task-counter-number {
+  color: #fff;
+  font-weight: 600;
+}
+
+.task-counter-label {
+  margin-left: 4px;
+}

@@ -1,0 +1,144 @@
+/* ===== ПЕРЕОПРЕДЕЛЕНИЯ STYLES ANT DESIGN ===== */
+
+/* Выпадающие меню */
+.ant-dropdown-menu {
+  background: #1f1f1f !important;
+  border: 1px solid #404040 !important;
+}
+
+.ant-dropdown-menu-item {
+  color: #fff !important;
+}
+
+.ant-dropdown-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Выпадающие списки */
+.ant-select-dropdown {
+  background: #1f1f1f !important;
+  border: 1px solid #404040;
+}
+
+.ant-select-item {
+  color: #fff !important;
+}
+
+.ant-select-item-option-selected {
+  background: #6234ef !important;
+}
+
+.ant-select-item-option-active {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Подтверждающие попапы */
+.ant-popconfirm .ant-popover-inner {
+  background: #1f1f1f;
+  border: 1px solid #404040;
+}
+
+.ant-popconfirm .ant-popover-title {
+  color: #fff;
+  border-bottom: 1px solid #303030;
+}
+
+.ant-popconfirm .ant-popover-inner-content {
+  color: #fff;
+}
+
+/* Календарь выбора даты */
+.ant-picker-panel {
+  background: #1f1f1f !important;
+  border: 1px solid #404040 !important;
+}
+
+.ant-picker-header button {
+  color: #fff !important;
+}
+
+.ant-picker-content th {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.ant-picker-cell {
+  color: #fff !important;
+}
+
+.ant-picker-cell-in-view {
+  color: #fff !important;
+}
+
+.ant-picker-cell-disabled {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.ant-picker-today-btn {
+  color: #6234ef !important;
+}
+
+/* DatePicker */
+.custom-task-datepicker .ant-picker {
+  background: transparent !important;
+  border: 1px solid #404040 !important;
+  border-radius: 6px !important;
+}
+
+.custom-task-datepicker .ant-picker-input input {
+  color: #fff !important;
+  background: transparent !important;
+}
+
+.custom-task-datepicker .ant-picker-input input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.custom-task-datepicker .ant-picker-suffix {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.custom-task-datepicker .ant-picker:hover {
+  background: #6234ef !important;
+  border-color: #6234ef !important;
+}
+
+.custom-task-datepicker .ant-picker:hover .ant-picker-input input {
+  color: #fff !important;
+}
+
+.custom-task-datepicker .ant-picker:hover .ant-picker-suffix {
+  color: #fff !important;
+}
+
+.custom-task-datepicker .ant-picker.ant-picker-focused {
+  border-color: #6234ef !important;
+  box-shadow: 0 0 0 2px rgba(98, 52, 239, 0.2) !important;
+}
+
+/* Элементы списка */
+.ant-list-item {
+  border-bottom: 1px solid #303030 !important;
+}
+
+.ant-list-item:last-child {
+  border-bottom: none !important;
+}
+
+.ant-list-item-meta-content {
+  width: 100%;
+}
+
+.ant-checkbox-wrapper {
+  margin-right: 12px;
+}
+
+.ant-btn-primary:disabled {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: #404040 !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Состояние пустого списка */
+.ant-empty-description {
+  color: rgba(255, 255, 255, 0.5);
+}

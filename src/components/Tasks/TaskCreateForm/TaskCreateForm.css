@@ -1,0 +1,99 @@
+/* ===== СОЗДАНИЕ ЗАДАЧИ ===== */
+.creating-task-card {
+  background: #262626;
+  border: 1px solid #404040;
+  margin-bottom: 8px;
+  border-radius: 8px;
+}
+
+.creating-task-card .ant-card-body {
+  padding: 16px;
+}
+
+.creating-task-content {
+  width: 100%;
+}
+
+.creating-task-header {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  margin-bottom: 12px;
+}
+
+.creating-task-checkbox .ant-checkbox-inner {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  width: 18px;
+  height: 18px;
+}
+
+.creating-task-input {
+  background: transparent !important;
+  border: none !important;
+  color: #fff !important;
+  font-size: 16px;
+  padding: 0 !important;
+  box-shadow: none !important;
+  flex: 1;
+}
+
+.creating-task-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.creating-task-input:focus {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.creating-task-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.creating-task-tags {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Стили для кнопок с иконками */
+.creating-task-icon-btn {
+  color: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid #404040 !important;
+  background: transparent !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.creating-task-icon-btn.has-value {
+  color: #fff !important;
+  border-color: #6234ef !important;
+}
+
+.creating-task-icon-btn:hover {
+  background: #6234ef !important;
+  border-color: #6234ef !important;
+  color: #fff !important;
+}
+
+@media (max-width: 768px) {
+  .creating-task-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .creating-task-tags {
+    flex-wrap: wrap;
+  }
+
+  .creating-task-card .ant-card-body {
+    padding: 12px;
+  }
+}

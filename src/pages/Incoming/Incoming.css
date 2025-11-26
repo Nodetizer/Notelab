@@ -1,0 +1,105 @@
+/* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
+.incoming-content {
+  padding: 24px;
+  background: #141414;
+  min-height: 100vh;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* ===== ШАПКА С ЗАГОЛОВКОМ И КНОПКАМИ ===== */
+.incoming-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.incoming-title-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.incoming-title {
+  color: #fff !important;
+  margin: 0 !important;
+}
+
+.incoming-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ===== СТИЛИ КНОПОК ===== */
+.filter-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.filter-btn:hover {
+  background: #6234ef !important;
+  border-color: #6234ef !important;
+  color: #fff !important;
+}
+
+.new-task-btn {
+  background: #6234ef;
+  border-color: #6234ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.new-task-btn:hover {
+  background: #5429d4 !important;
+  border-color: #5429d4 !important;
+}
+
+/* ===== РАЗДЕЛИТЕЛЬНАЯ ЛИНИЯ ===== */
+.incoming-divider {
+  background: #303030;
+  margin: 16px 0;
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 768px) {
+  .incoming-content {
+    padding: 16px;
+  }
+
+  .incoming-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .incoming-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .incoming-content {
+    padding: 12px;
+  }
+
+  .incoming-actions {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .incoming-actions .ant-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

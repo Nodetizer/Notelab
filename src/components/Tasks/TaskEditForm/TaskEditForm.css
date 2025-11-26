@@ -1,0 +1,50 @@
+/* ===== РЕДАКТИРОВАНИЕ ЗАДАЧИ ===== */
+.editing-task-content {
+  width: 100%;
+}
+
+.editing-task-input {
+  background: transparent !important;
+  border: 1px solid #404040 !important;
+  color: #fff !important;
+  margin-bottom: 8px;
+}
+
+.editing-task-input:focus {
+  border-color: #6234ef !important;
+  box-shadow: 0 0 0 2px rgba(98, 52, 239, 0.2) !important;
+}
+
+.editing-task-controls {
+  width: 100%;
+}
+
+.priority-select,
+.complexity-select {
+  width: 140px;
+}
+
+.priority-select .ant-select-selector,
+.complexity-select .ant-select-selector {
+  background: #1f1f1f !important;
+  border-color: #404040 !important;
+  color: #fff !important;
+}
+
+.priority-select .ant-select-selector:hover,
+.complexity-select .ant-select-selector:hover {
+  border-color: #6234ef !important;
+}
+
+@media (max-width: 768px) {
+  .editing-task-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .priority-select,
+  .complexity-select {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}
