@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Button, Space, Typography, Divider, List, Empty, message } from "antd";
 import { FilterOutlined, PlusOutlined } from "@ant-design/icons";
-import { useTasks } from "../../hooks/useTasks";
+import { useTasks } from "../../hooks/UseTasks";
 import TaskCounter from "../../components/UI/TaskCounter/TaskCounter";
 import TaskCreateForm from "../../components/Tasks/TaskCreateForm/TaskCreateForm";
 import TaskItem from "../../components/Tasks/TaskItem/TaskItem";
+import type { Task } from "../../types/TaskTypes";
+import dayjs from "dayjs";
 import "./Incoming.css";
 
 const { Title } = Typography;
 
 const Incoming: React.FC = () => {
-  const { tasks, createTask, deleteTask, toggleTaskCompletion, pushToHistory } =
-    useTasks();
+  const { tasks, createTask, deleteTask, toggleTaskCompletion } = useTasks();
 
   const [creatingTask, setCreatingTask] = useState(false);
   const [newTaskText, setNewTaskText] = useState("");
@@ -69,13 +70,15 @@ const Incoming: React.FC = () => {
     setEditingTaskDate(task.taskDate ? dayjs(task.taskDate) : null);
   };
 
-  const handleSaveEditing = (id: number) => {
+  const handleSaveEditing = () => {
     if (editingText.trim() === "") {
       message.warning("Текст задачи не может быть пустым");
       return;
     }
 
-    // Логика сохранения редактирования через хук
+    // TODO: Добавить логику сохранения редактирования через хук
+    // Например: updateTask(editingTaskId, { text: editingText.trim(), ... })
+
     setEditingTaskId(null);
     message.success("Задача обновлена");
   };

@@ -1,4 +1,5 @@
-import { Task } from "../types/TaskTypes";
+import type { Task } from "../types/TaskTypes";
+import dayjs from "dayjs";
 
 export const getPriorityColor = (priority?: Task["priority"]) => {
   switch (priority) {
@@ -28,11 +29,34 @@ export const getComplexityColor = (complexity?: Task["complexity"]) => {
   }
 };
 
+// Создаем интерфейс для данных из localStorage
+interface StoredTask {
+  id: number;
+  text: string;
+  completed: boolean;
+  priority?: string;
+  complexity?: string;
+  taskDate?: string;
+}
+
 export const loadTasksFromStorage = (): Task[] => {
   const savedTasks = localStorage.getItem("incoming-tasks");
-  return savedTasks ? JSON.parse(savedTasks) : [];
+  if (savedTasks) {
+    const parsedTasks: StoredTask[] = JSON.parse(savedTasks);
+    return parsedTasks.map((task) => ({
+      ...task,
+      priority: task.priority as Task["priority"],
+      complexity: task.complexity as Task["complexity"],
+      taskDate: task.taskDate,
+    }));
+  }
+  return [];
 };
 
 export const saveTasksToStorage = (tasks: Task[]) => {
   localStorage.setItem("incoming-tasks", JSON.stringify(tasks));
+};
+
+export const formatDate = (dateString: string): string => {
+  return dayjs(dateString).format("DD.MM.YYYY");
 };

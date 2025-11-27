@@ -1,11 +1,7 @@
 import React from "react";
 import { Card, Input, Button, Dropdown, DatePicker, Space } from "antd";
-import {
-  FlagOutlined,
-  BarChartOutlined,
-  CalendarOutlined,
-} from "@ant-design/icons";
-import { TaskPriority, TaskComplexity } from "../../../types/taskTypes";
+import { BarChartOutlined, CalendarOutlined } from "@ant-design/icons";
+import type { TaskPriority, TaskComplexity } from "../../../types/TaskTypes";
 import dayjs from "dayjs";
 import "./TaskCreateForm.css";
 
@@ -24,7 +20,7 @@ interface TaskCreateFormProps {
 
 const TaskCreateForm: React.FC<TaskCreateFormProps> = ({
   newTaskText,
-  newTaskPriority,
+  newTaskPriority = "Срочно", // ДЕЛАЕМ "СРОЧНО" ПО УМОЛЧАНИЮ
   newTaskComplexity,
   newTaskDate,
   onTextChange,
@@ -36,18 +32,46 @@ const TaskCreateForm: React.FC<TaskCreateFormProps> = ({
 }) => {
   const priorityMenu = {
     items: [
-      { key: "1", label: "Срочно", onClick: () => onPriorityChange("Срочно") },
+      {
+        key: "1",
+        label: (
+          <div className="priority-menu-item">
+            <span className="priority-dot urgent"></span>
+            Срочно
+          </div>
+        ),
+        onClick: () => onPriorityChange("Срочно"),
+      },
       {
         key: "2",
-        label: "Высокий",
+        label: (
+          <div className="priority-menu-item">
+            <span className="priority-dot high"></span>
+            Высокий
+          </div>
+        ),
         onClick: () => onPriorityChange("Высокий"),
       },
       {
         key: "3",
-        label: "Средний",
+        label: (
+          <div className="priority-menu-item">
+            <span className="priority-dot medium"></span>
+            Средний
+          </div>
+        ),
         onClick: () => onPriorityChange("Средний"),
       },
-      { key: "4", label: "Низкий", onClick: () => onPriorityChange("Низкий") },
+      {
+        key: "4",
+        label: (
+          <div className="priority-menu-item">
+            <span className="priority-dot low"></span>
+            Низкий
+          </div>
+        ),
+        onClick: () => onPriorityChange("Низкий"),
+      },
       {
         key: "5",
         label: "Убрать приоритет",
@@ -81,6 +105,29 @@ const TaskCreateForm: React.FC<TaskCreateFormProps> = ({
     ],
   };
 
+  const getPriorityDot = (priority?: TaskPriority) => {
+    if (!priority) return null;
+
+    return (
+      <span className={`priority-dot ${getPriorityClass(priority)}`}></span>
+    );
+  };
+
+  const getPriorityClass = (priority: TaskPriority) => {
+    switch (priority) {
+      case "Срочно":
+        return "urgent";
+      case "Высокий":
+        return "high";
+      case "Средний":
+        return "medium";
+      case "Низкий":
+        return "low";
+      default:
+        return "";
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       onCreate();
@@ -107,12 +154,12 @@ const TaskCreateForm: React.FC<TaskCreateFormProps> = ({
             <Dropdown menu={priorityMenu} trigger={["click"]}>
               <Button
                 type="text"
-                icon={<FlagOutlined />}
-                className={`creating-task-icon-btn ${
-                  newTaskPriority ? "has-value" : ""
-                }`}
+                className={`priority-btn ${getPriorityClass(
+                  newTaskPriority || "Срочно"
+                )}`}
               >
-                {newTaskPriority || "Приоритет"}
+                {getPriorityDot(newTaskPriority || "Срочно")}
+                {newTaskPriority || "Срочно"}
               </Button>
             </Dropdown>
 

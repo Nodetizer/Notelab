@@ -5,7 +5,7 @@ import {
   formatMonthYear,
   getPreviousMonth,
   getNextMonth,
-} from "../../../utils/dateUtils";
+} from "../../../utils/DateUtils";
 import "react-day-picker/dist/style.css";
 import "./TaskDatePicker.css";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Input, Select, DatePicker, Space } from "antd";
-import { TaskPriority, TaskComplexity } from "../../../types/taskTypes";
+import type { Task } from "../../../types/TaskTypes"; // ИМПОРТИМ ТОЛЬКО Task
 import dayjs from "dayjs";
 import "./TaskEditForm.css";
 
@@ -8,12 +8,12 @@ const { Option } = Select;
 
 interface TaskEditFormProps {
   editingText: string;
-  editingPriority?: TaskPriority;
-  editingComplexity?: TaskComplexity;
+  editingPriority?: Task["priority"]; // ИСПОЛЬЗУЕМ Task["priority"]
+  editingComplexity?: Task["complexity"]; // ИСПОЛЬЗУЕМ Task["complexity"]
   editingTaskDate: dayjs.Dayjs | null;
   onTextChange: (text: string) => void;
-  onPriorityChange: (priority?: TaskPriority) => void;
-  onComplexityChange: (complexity?: TaskComplexity) => void;
+  onPriorityChange: (priority?: Task["priority"]) => void;
+  onComplexityChange: (complexity?: Task["complexity"]) => void;
   onDateChange: (date: dayjs.Dayjs | null) => void;
   onSave: () => void;
   onCancel: () => void;

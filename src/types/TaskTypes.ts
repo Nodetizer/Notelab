@@ -7,6 +7,9 @@ export interface Task {
   taskDate?: string;
 }
 
+export type TaskPriority = Task["priority"];
+export type TaskComplexity = Task["complexity"];
+
 export type HistoryAction =
   | { type: "CREATE"; task: Task }
   | { type: "DELETE"; task: Task }

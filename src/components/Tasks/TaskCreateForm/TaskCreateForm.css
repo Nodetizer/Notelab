@@ -21,13 +21,6 @@
   margin-bottom: 12px;
 }
 
-.creating-task-checkbox .ant-checkbox-inner {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-  width: 18px;
-  height: 18px;
-}
-
 .creating-task-input {
   background: transparent !important;
   border: none !important;
@@ -61,7 +54,7 @@
   align-items: center;
 }
 
-/* Стили для кнопок с иконками */
+/* Стили для кнопок сложности и даты */
 .creating-task-icon-btn {
   color: rgba(255, 255, 255, 0.6) !important;
   border: 1px solid #404040 !important;
@@ -69,6 +62,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  transition: all 0.2s ease;
 }
 
 .creating-task-icon-btn.has-value {
@@ -80,6 +74,98 @@
   background: #6234ef !important;
   border-color: #6234ef !important;
   color: #fff !important;
+}
+
+/* Стили для кнопки приоритета (БЕЗ ГРАНИЦ) */
+.priority-btn {
+  color: rgba(255, 255, 255, 0.6) !important;
+  border: none !important;
+  background: transparent !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px !important;
+  transition: all 0.2s ease;
+}
+
+.priority-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+}
+
+/* Цвета текста для разных приоритетов */
+.priority-btn.urgent {
+  color: #fb2c36 !important;
+}
+
+.priority-btn.high {
+  color: #ff6900 !important;
+}
+
+.priority-btn.medium {
+  color: #2c74fb !important;
+}
+
+.priority-btn.low {
+  color: #b1b1b1 !important;
+}
+
+/* Ховер цвета для приоритетов */
+.priority-btn.urgent:hover {
+  color: #fb2c36 !important;
+  background: rgba(251, 44, 54, 0.1) !important;
+}
+
+.priority-btn.high:hover {
+  color: #ff6900 !important;
+  background: rgba(255, 105, 0, 0.1) !important;
+}
+
+.priority-btn.medium:hover {
+  color: #2c74fb !important;
+  background: rgba(44, 116, 251, 0.1) !important;
+}
+
+.priority-btn.low:hover {
+  color: #b1b1b1 !important;
+  background: rgba(177, 177, 177, 0.1) !important;
+}
+
+/* Стили для кружков приоритета */
+.priority-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.priority-dot.urgent {
+  background: #fb2c36;
+}
+
+.priority-dot.high {
+  background: #ff6900;
+}
+
+.priority-dot.medium {
+  background: #2c74fb;
+}
+
+.priority-dot.low {
+  background: #b1b1b1;
+}
+
+/* Стили для элементов выпадающего меню приоритета */
+.priority-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Ховер для элементов меню приоритета */
+.ant-dropdown-menu-item:hover .priority-menu-item {
+  color: #fff;
 }
 
 @media (max-width: 768px) {

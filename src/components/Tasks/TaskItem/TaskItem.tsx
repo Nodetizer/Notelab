@@ -1,4 +1,5 @@
 import React from "react";
+import dayjs from "dayjs";
 import { List, Checkbox, Tag, Popconfirm } from "antd";
 import {
   EditOutlined,
@@ -7,12 +8,13 @@ import {
   BarChartOutlined,
   CalendarOutlined,
 } from "@ant-design/icons";
-import { Task } from "../../../types/taskTypes";
+import type { Task } from "../../../types/TaskTypes";
 import {
   getPriorityColor,
   getComplexityColor,
   formatDate,
-} from "../../../utils/taskUtils";
+} from "../../../utils/TaskUtils";
+import TaskEditForm from "../TaskEditForm/TaskEditForm";
 import "./TaskItem.css";
 
 interface TaskItemProps {
@@ -22,14 +24,14 @@ interface TaskItemProps {
   editingText: string;
   editingPriority?: Task["priority"];
   editingComplexity?: Task["complexity"];
-  editingTaskDate: any;
+  editingTaskDate: dayjs.Dayjs | null; // ЗАМЕНЯЕМ any на правильный тип
   onSelect: (id: number) => void;
   onDoubleClick: (task: Task) => void;
   onToggleCompletion: (id: number) => void;
   onEditTextChange: (text: string) => void;
   onEditPriorityChange: (priority?: Task["priority"]) => void;
   onEditComplexityChange: (complexity?: Task["complexity"]) => void;
-  onEditDateChange: (date: any) => void;
+  onEditDateChange: (date: dayjs.Dayjs | null) => void; // ЗАМЕНЯЕМ any на правильный тип
   onSaveEdit: (id: number) => void;
   onCancelEdit: () => void;
   onDelete: (id: number) => void;
